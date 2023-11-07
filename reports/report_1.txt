@@ -1,0 +1,184 @@
+===========================================
+feds paper 10.txt
+Показатели с NLTK
+===========================================
+Общее количество слов : 758
+
+Частота: 
+1) faction - 12; 2) citizens - 10; 3) interests - 10; 
+4) government - 10; 5) number - 9; 6) interest - 9; 
+7) may - 9; 8) republic - 7; 9) democracy - 6; 
+10) majority - 6; 11) different - 6; 12) small - 6; 
+13) Federalist - 5; 14) Madison - 5; 15) common - 5; 
+16) rights - 5; 17) first - 5; 18) society - 5; 
+19) public - 5; 20) great - 5; 21) greater - 5; 
+22) Paper - 4; 23) Number - 4; 24) 10 - 4; 
+25) Union - 4; 26) whole - 4; 27) less - 4; 
+28) good - 4; 29) republican - 4; 30) form - 4; 
+31) must - 4; 32) latter - 4; 33) Constitution - 3; 
+34) factions - 3; 35) pure - 3; 36) according - 3; 
+37) passion - 3; 38) two - 3; 39) causes - 3; 
+40) one - 3; 41) liberty - 3; 42) essential - 3; 
+43) without - 3; 44) brought - 3; 45) Copyright - 3; 
+46) В - 3; 47) McGraw - 3; 48) Hill - 3; 
+49) Companies - 3; 50) Inc - 3; 51) views - 3; 
+52) forms - 3; 53) spirit - 3; 54) party - 3; 
+55) render - 3; 56) considerations - 3; 57) sacrifice - 3; 
+58) mean - 3; 59) cure - 3; 60) place - 3; 
+61) difference - 3; 62) large - 3; 63) James - 2; 
+64) articles - 2; 65) New - 2; 66) York - 2; 
+67) people - 2; 68) Publius - 2; 69) вЂў - 2; 
+70) say - 2; 71) advantage - 2; 72) violence - 2; 
+73) whether - 2; 74) actuated - 2; 75) aggregate - 2; 
+76) every - 2; 77) opinions - 2; 78) could - 2; 
+79) remedy - 2; 80) air - 2; 81) fire - 2; 
+82) life - 2; 83) would - 2; 84) long - 2; 
+85) man - 2; 86) formed - 2; 87) nature - 2; 
+88) circumstances - 2; 89) various - 2; 90) property - 2; 
+91) distinct - 2; 92) many - 2; 93) lesser - 2; 
+94) statesmen - 2; 95) cases - 2; 96) view - 2; 
+97) relief - 2; 98) controlling - 2; 99) effects - 2; 
+100) enables - 2; 101) popular - 2; 102) hand - 2; 
+103) Let - 2; 104) points - 2; 105) comprehend - 2; 
+106) sphere - 2; 107) country - 2; 108) chosen - 2; 
+109) whose - 2; 110) likely - 2; 111) proper - 2; 
+112) clearly - 2; 113) however - 2; 114) certain - 2; 
+115) order - 2; 116) guard - 2; 117) representative - 2; 
+118) difficult - 2; 119) much - 2; 120) little - 2; 
+121) local - 2; 122) national - 2; 123) extent - 2; 
+124) parties - 2; 125) composing - 2; 126) motive - 2; 
+127) feel - 2; 128) enjoyed - 2; 129) 1 - 1; 
+130) OVERVIEW - 1; 131) Alexander - 1; 132) Hamilton - 1; 
+133) John - 1; 134) Jay - 1; 135) wrote - 1; 
+136) 85 - 1; 137) anonymous - 1; 138) Journal - 1; 
+139) 1787 - 1; 140) 1788 - 1; 141) aim - 1; 
+142) persuading - 1; 143) ratify - 1; 144) proposed - 1; 
+145) known - 1; 146) Papers - 1; 147) paper - 1; 
+148) comments - 1; 149) checks - 1; 150) balances - 1; 
+151) competing - 1; 152) American - 1; 153) politics - 1; 
+154) signs - 1; 155) GUIDED - 1; 156) READING - 1; 
+157) read - 1; 158) consider - 1; 159) following - 1; 
+160) questions - 1; 161) differences - 1; 162) mong - 1; 
+163) numerous - 1; 164) advantages - 1; 165) promised - 1; 
+166) well - 1; 167) constructed - 1; 168) none - 1; 
+169) deserves - 1; 170) accurately - 1; 171) developed - 1; 
+172) tendency - 1; 173) break - 1; 174) control - 1; 
+175) understand - 1; 176) amounting - 1; 177) minority - 1; 
+178) united - 1; 179) impulse - 1; 180) adverse - 1; 
+181) permanent - 1; 182) community - 1; 183) methods - 1; 
+184) removing - 1; 185) destroying - 1; 186) existence - 1; 
+187) giving - 1; 188) citizen - 1; 189) passions - 1; 
+190) never - 1; 191) truly - 1; 192) said - 1; 
+193) worse - 1; 194) disease - 1; 195) Liberty - 1; 
+196) aliment - 1; 197) instantly - 1; 198) expires - 1; 
+199) folly - 1; 200) abolish - 1; 201) political - 1; 
+202) nourishes - 1; 203) wish - 1; 204) annihilation - 1; 
+205) animal - 1; 206) imparts - 1; 207) destructive - 1; 
+208) agency - 1; 209) second - 1; 210) expedient - 1; 
+211) impracticable - 1; 212) unwise - 1; 213) reason - 1; 
+214) continues - 1; 215) fallible - 1; 216) exercise - 1; 
+217) latent - 1; 218) thus - 1; 219) sown - 1; 
+220) see - 1; 221) everywhere - 1; 222) degrees - 1; 
+223) activity - 1; 224) civil - 1; 225) durable - 1; 
+226) source - 1; 227) unequal - 1; 228) distribution - 1; 
+229) hold - 1; 230) ever - 1; 231) creditors - 1; 
+232) debtors - 1; 233) fall - 1; 234) 2 - 1; 
+235) like - 1; 236) discrimination - 1; 237) landed - 1; 
+238) manufacturing - 1; 239) mercantile - 1; 240) moneyed - 1; 
+241) grow - 1; 242) necessity - 1; 243) civilized - 1; 
+244) nations - 1; 245) divide - 1; 246) classes - 1; 
+247) sentiments - 1; 248) regulation - 1; 249) interfering - 1; 
+250) principal - 1; 251) task - 1; 252) modern - 1; 
+253) legislation - 1; 254) involves - 1; 255) necessary - 1; 
+256) ordinary - 1; 257) operations - 1; 258) vain - 1; 
+259) enlightened - 1; 260) able - 1; 261) adjust - 1; 
+262) clashing - 1; 263) subservient - 1; 264) Enlightened - 1; 
+265) always - 1; 266) helm - 1; 267) adjustment - 1; 
+268) made - 1; 269) taking - 1; 270) indirect - 1; 
+271) remote - 1; 272) rarely - 1; 273) prevail - 1; 
+274) immediate - 1; 275) find - 1; 276) disregarding - 1; 
+277) another - 1; 278) inference - 1; 279) cannot - 1; 
+280) removed - 1; 281) sought - 1; 282) means - 1; 
+283) consists - 1; 284) supplied - 1; 285) principle - 1; 
+286) defeat - 1; 287) sinister - 1; 288) regular - 1; 
+289) vote - 1; 290) clog - 1; 291) administration - 1; 
+292) convulse - 1; 293) unable - 1; 294) execute - 1; 
+295) mask - 1; 296) included - 1; 297) ruling - 1; 
+298) secure - 1; 299) private - 1; 300) danger - 1; 
+301) time - 1; 302) preserve - 1; 303) object - 1; 
+304) inquiries - 1; 305) directed - 1; 306) add - 1; 
+307) desideratum - 1; 308) rescued - 1; 309) opprobrium - 1; 
+310) labored - 1; 311) recommended - 1; 312) esteem - 1; 
+313) adoption - 1; 314) mankind - 1; 315) subject - 1; 
+316) concluded - 1; 317) consisting - 1; 318) assemble - 1; 
+319) administer - 1; 320) person - 1; 321) admit - 1; 
+322) mischiefs - 1; 323) almost - 1; 324) case - 1; 
+325) felt - 1; 326) communication - 1; 327) concert - 1; 
+328) result - 1; 329) nothing - 1; 330) check - 1; 
+331) inducements - 1; 332) weaker - 1; 333) obnoxious - 1; 
+334) individual - 1; 335) scheme - 1; 336) representation - 1; 
+337) takes - 1; 338) opens - 1; 339) prospect - 1; 
+340) promises - 1; 341) seeking - 1; 342) us - 1; 
+343) examine - 1; 344) varies - 1; 345) shall - 1; 
+346) efficacy - 1; 347) derive - 1; 348) delegation - 1; 
+349) 3 - 1; 350) elected - 1; 351) rest - 1; 
+352) secondly - 1; 353) extended - 1; 354) effect - 1; 
+355) refine - 1; 356) enlarge - 1; 357) passing - 1; 
+358) medium - 1; 359) body - 1; 360) wisdom - 1; 
+361) best - 1; 362) discern - 1; 363) true - 1; 
+364) patriotism - 1; 365) love - 1; 366) justice - 1; 
+367) least - 1; 368) temporary - 1; 369) partial - 1; 
+370) question - 1; 371) resulting - 1; 372) extensive - 1; 
+373) republics - 1; 374) favorable - 1; 375) election - 1; 
+376) guardians - 1; 377) weal - 1; 378) decided - 1; 
+379) favor - 1; 380) obvious - 1; 381) remarked - 1; 
+382) representatives - 1; 383) raised - 1; 384) cabals - 1; 
+385) limited - 1; 386) confusion - 1; 387) multitude - 1; 
+388) next - 1; 389) unworthy - 1; 390) candidates - 1; 
+391) practice - 1; 392) success - 1; 393) vicious - 1; 
+394) arts - 1; 395) elections - 1; 396) often - 1; 
+397) carried - 1; 398) suffrages - 1; 399) free - 1; 
+400) center - 1; 401) men - 1; 402) possess - 1; 
+403) attractive - 1; 404) merit - 1; 405) diffusive - 1; 
+406) established - 1; 407) characters - 1; 408) confessed - 1; 
+409) sides - 1; 410) inconveniences - 1; 411) found - 1; 
+412) lie - 1; 413) enlarging - 1; 414) electors - 1; 
+415) acquainted - 1; 416) reducing - 1; 417) unduly - 1; 
+418) attached - 1; 419) fit - 1; 420) pursue - 1; 
+421) objects - 1; 422) federal - 1; 423) happy - 1; 
+424) combination - 1; 425) respect - 1; 426) referred - 1; 
+427) particular - 1; 428) state - 1; 429) legislatures - 1; 
+430) point - 1; 431) territory - 1; 432) within - 1; 
+433) compass - 1; 434) democratic - 1; 435) circumstance - 1; 
+436) principally - 1; 437) renders - 1; 438) factious - 1; 
+439) combinations - 1; 440) dreaded - 1; 441) former - 1; 
+442) smaller - 1; 443) fewer - 1; 444) probably - 1; 
+445) Extend - 1; 446) take - 1; 447) variety - 1; 
+448) make - 1; 449) probable - 1; 450) invade - 1; 
+451) exists - 1; 452) discover - 1; 453) strength - 1; 
+454) act - 1; 455) unison - 1; 456) Hence - 1; 
+457) appears - 1; 458) republicвЂ - 1; 459) states - 1; 
+460) 4 - 1; 461) structure - 1; 462) therefore - 1; 
+463) behold - 1; 464) diseases - 1; 465) incident - 1; 
+466) degree - 1; 467) pleasure - 1; 468) pride - 1; 
+469) republicans - 1; 470) ought - 1; 471) zeal - 1; 
+472) cherishing - 1; 473) supporting - 1; 474) character - 1; 
+475) Federalists - 1; 
+
+Частоупотребляемые слова (топ 10):
+1) faction - 12; 2) citizens - 10; 3) interests - 10; 
+4) government - 10; 5) number - 9; 6) interest - 9; 
+7) may - 9; 8) republic - 7; 9) democracy - 6; 
+10) majority - 6; 
+
+Индексы читаемости: 
+1) Flesch–Kincaid index: 8.933
+2) Gunning fog index: 8.431
+3) SMOG index: 7.328
+4) Coleman_Liau_index: 10.719
+5) ARI_index: 13.073
+
+Среднее значение по всем индексам: 9.697
+Медианное значение по всем индексам: 8.933
+Среднее количество слов за предложение: 18.092
+===========================================

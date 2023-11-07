@@ -1,4 +1,6 @@
 import re
+import os
+import uuid
 import statistics
 import nltk
 from langdetect import detect
@@ -11,20 +13,49 @@ from collections import Counter
 from textstat import flesch_reading_ease
 # nltk.download('stopwords')
 
-class text_analyzer:
+class Text_analysis:
     # нужно делать проверку каждого слова на принадлежность к языку с помощью комплексного сравнения (берем по 3-4 слова проводим анализ по каждому, потому по перебору, потом
     # берем среднюю и присваиваем итоговое значение языка слову
     # Установка списков языков
     def __init__(self):
+        curr_directory = os.getcwd()
         DetectorFactory.seed = 0
         # detect.set_languages
-        #Открытие временного тхт (нужно заменить на 1) либо автоматический забор текста по юрл , либо окошком с возможностью загрузки текста
-        # with open('lorem.txt', 'r') as file:
-        # with open('green eggs and ham.txt', 'r') as file:
-            # text = file.read()
-        # text = 'The Australian platypus is seemingly a hybrid of a mammal and reptilian creature'
-        text = 'Existing computer programs that measure readability are based largely upon subroutines which estimate number of syllables, usually by counting vowels. The shortcoming in estimating syllables is that it necessitates keypunching the prose into the computer. There is no need to estimate syllables since word length in letters is a better predictor of readability than word length in syllables. Therefore, a new readability formula was computed that has for its predictors letters per 100 words and sentences per 100 words. Both predictors can be counted by an optical scanning device, and thus the formula makes it economically feasible for an organization such as the U.S Office of Education to calibrate the readability of all textbooks for the public school system.'
-        #Создание отчета
+        def opening_the_text():
+            global text
+            global text_file_name
+            try:
+                text_file_name = 'green eggs and ham.txt'
+                text_folder = os.path.join(curr_directory, 'Text_examples')
+                text_file_directory_and_name = os.path.join(text_folder, text_file_name)
+                #Открытие временного тхт (нужно заменить на 1) либо автоматический забор текста по юрл , либо окошком с возможностью загрузки текста
+                with open(text_file_directory_and_name, 'r') as file:
+                    text = file.read()
+            except Exception as e:
+                print('Cannot open the text')
+        opening_the_text()
+
+        # Создание отчета
+        def create_report():
+            try:
+                global report_file_name
+                report_folder = os.path.join(curr_directory, "reports")
+                if not os.path.exists(report_folder):
+                    os.mkdir(report_folder)
+                existing_reports = os.listdir(report_folder)
+                rep_counter = 1
+                for file in existing_reports:
+                    if file.startswith("report_"):
+                        part_name = file.split("_")
+                        file_num = int(part_name[1].split(".")[0])
+                        rep_counter = max(rep_counter, file_num + 1)
+                report_file_name = os.path.join(report_folder, f"report_{rep_counter}.txt")
+                with open(report_file_name, 'w') as report:
+                    report.write(" ")
+            except Exception as e:
+                print('Error - cannot create a report file')
+                pass
+        create_report()
         report_file = 'report.txt'
         dic_ru = pyphen.Pyphen(lang='ru')
         dic_en = pyphen.Pyphen(lang='en')
@@ -33,13 +64,6 @@ class text_analyzer:
         #Использование фильтрации частиц, артиклей, предлогов с помощью nltk
         stop_words = set(stopwords.words('English'))
         filtered_words = [word for word in words if word.lower() not in stop_words]
-        filtered_words_list = []
-
-        with open(report_file, 'w') as report:
-            report.write('Отфильтрованные слова')
-            for item in filtered_words:
-                report.write(item + '\n')
-
         #Реализация скрипта с фильтрацией через NLTK
         def NLTK_method():
             total_words = len(filtered_words)
@@ -153,90 +177,94 @@ class text_analyzer:
             #Среднее и медиана по всем индексам
             avg_index = (fkrt_index + gunning + smog + coleman + ariindex)/5
             median_ind = (statistics.median([fkrt_index, gunning, smog, coleman, ariindex]))
-            with open(report_file, 'w') as report:
-                report.write('===========================================\n')
-                report.write('Показатели с NLTK\n')
-                report.write('===========================================\n')
-                report.write('Общее количество слов : ')
-                report.write(str(f"{total_words}\n\n"))
-                report.write('Частота: \n')
-                report_wrd_cnt = 0
-                num_cntr = 0
-                for word, count in words_frequency:
-                    num_cntr +=1
-                    report.write(f"{num_cntr}){word} - {count}; ")
-                    report_wrd_cnt +=1
-                    if report_wrd_cnt == 3:
-                        report.write("\n")
-                        report_wrd_cnt = 0
-                report.write("\n\n")
-                report_wrd_cnt = 0
-                num_cntr = 0
-                    # report.write(str(f"{words_freq}\n"))
-                report.write(f'Частоупотребляемые слова (топ {number_of_top_common_words}):\n')
-                for word, count in most_common_words:
-                    num_cntr += 1
-                    report.write(f"{num_cntr}){word} - {count}; ")
-                    report_wrd_cnt += 1
-                    if report_wrd_cnt == 3:
-                        report.write("\n")
-                        report_wrd_cnt = 0
-                report.write("\n\n")
-                report.write('Индексы читаемости: \n')
-                # Старый, библотечный метод Flesch-Kincaid
-                # try:
-                #     report.write(str(f"1) Flesch–Kincaid readability tests old: {round(readability_score, 3)}\n"))
-                # except Exception as e:
-                #     report.write(str(f"1) Flesch–Kincaid readability tests old: n/a \n"))
-                #     pass
-                # try:
-                #     report.write(f"Интерпретация сложности old: {difficulty}\n")
-                # except Exception as e:
-                #     report.write(f"Интерпретация сложности old: n/a \n")
-                #     pass
-                try:
-                    report.write(str(f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n"))
-                except Exception as e:
-                    report.write(str(f"1) Flesch–Kincaid index: n/a \n"))
-                    pass
-                try:
-                    report.write(str(f"2) Gunning fog index: {round(gunning, 3)}\n"))
-                except Exception as e:
-                    report.write(str(f"2) Gunning fog index: n/a \n"))
-                    pass
-                try:
-                    report.write(str(f"3) SMOG index: {round(smog, 3)}\n"))
-                except Exception as e:
-                    report.write(str(f"3) SMOG index: n/a \n"))
-                    pass
-                try:
-                    report.write(str(f"4) Coleman_Liau_index: {round(coleman, 3)}\n"))
-                except Exception as e:
-                    report.write(str(f"4) Coleman_Liau_index: n/a \n"))
-                    pass
-                try:
-                    report.write(str(f"5) ARI_index: {round(ariindex, 3)}\n"))
-                except Exception as e:
-                    report.write(str(f"5) ARI_index: n/a \n"))
-                    pass
-                report.write("\n")
-                #Нужно скорректировать индекс 1 и 5 (1 пересчитать, библиотека верно его считает, но выводит не в нужной шкале)
-                try:
-                    report.write(str(f"Среднее значение по всем индексам: {round(avg_index, 3)}\n"))
-                except Exception as e:
-                    report.write(str(f"Среднее значение по всем индексам: n/a \n"))
-                    pass
-                try:
-                    report.write(str(f"Медианное значение по всем индексам: {round(median_ind, 3)}\n"))
-                except Exception as e:
-                    report.write(str(f"Медианное значение по всем индексам: n/a \n"))
-                    pass
-                try:
-                    report.write(f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
-                except Exception as e:
-                    report.write(f"Среднее количество слов за предложение: n/a \n")
-                    pass
-                report.write('===========================================')
+            with open(report_file_name, 'w') as report:
+                def report_creation():
+                    report.write('===========================================\n')
+                    report.write(f"{text_file_name}\n")
+                    report.write('Показатели с NLTK\n')
+                    report.write('===========================================\n')
+                    report.write('Общее количество слов : ')
+                    report.write(str(f"{total_words}\n\n"))
+                    report.write('Частота: \n')
+                    report_wrd_cnt = 0
+                    num_cntr = 0
+                    for word, count in words_frequency:
+                        num_cntr +=1
+                        report.write(f"{num_cntr}) {word} - {count}; ")
+                        report_wrd_cnt +=1
+                        if report_wrd_cnt == 3:
+                            report.write("\n")
+                            report_wrd_cnt = 0
+                    report.write("\n\n")
+                    report_wrd_cnt = 0
+                    num_cntr = 0
+                        # report.write(str(f"{words_freq}\n"))
+                    report.write(f'Частоупотребляемые слова (топ {number_of_top_common_words}):\n')
+                    for word, count in most_common_words:
+                        num_cntr += 1
+                        report.write(f"{num_cntr}) {word} - {count}; ")
+                        report_wrd_cnt += 1
+                        if report_wrd_cnt == 3:
+                            report.write("\n")
+                            report_wrd_cnt = 0
+                    report.write("\n\n")
+                    report.write('Индексы читаемости: \n')
+                    # Старый, библотечный метод Flesch-Kincaid
+                    # try:
+                    #     report.write(str(f"1) Flesch–Kincaid readability tests old: {round(readability_score, 3)}\n"))
+                    # except Exception as e:
+                    #     report.write(str(f"1) Flesch–Kincaid readability tests old: n/a \n"))
+                    #     pass
+                    # try:
+                    #     report.write(f"Интерпретация сложности old: {difficulty}\n")
+                    # except Exception as e:
+                    #     report.write(f"Интерпретация сложности old: n/a \n")
+                    #     pass
+                    try:
+                        report.write(str(f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n"))
+                    except Exception as e:
+                        report.write(str(f"1) Flesch–Kincaid index: n/a \n"))
+                        pass
+                    try:
+                        report.write(str(f"2) Gunning fog index: {round(gunning, 3)}\n"))
+                    except Exception as e:
+                        report.write(str(f"2) Gunning fog index: n/a \n"))
+                        pass
+                    try:
+                        report.write(str(f"3) SMOG index: {round(smog, 3)}\n"))
+                    except Exception as e:
+                        report.write(str(f"3) SMOG index: n/a \n"))
+                        pass
+                    try:
+                        report.write(str(f"4) Coleman_Liau_index: {round(coleman, 3)}\n"))
+                    except Exception as e:
+                        report.write(str(f"4) Coleman_Liau_index: n/a \n"))
+                        pass
+                    try:
+                        report.write(str(f"5) ARI_index: {round(ariindex, 3)}\n"))
+                    except Exception as e:
+                        report.write(str(f"5) ARI_index: n/a \n"))
+                        pass
+                    report.write("\n")
+                    #Нужно скорректировать индекс 1 и 5 (1 пересчитать, библиотека верно его считает, но выводит не в нужной шкале)
+                    try:
+                        report.write(str(f"Среднее значение по всем индексам: {round(avg_index, 3)}\n"))
+                    except Exception as e:
+                        report.write(str(f"Среднее значение по всем индексам: n/a \n"))
+                        pass
+                    try:
+                        report.write(str(f"Медианное значение по всем индексам: {round(median_ind, 3)}\n"))
+                    except Exception as e:
+                        report.write(str(f"Медианное значение по всем индексам: n/a \n"))
+                        pass
+                    try:
+                        report.write(f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
+                    except Exception as e:
+                        report.write(f"Среднее количество слов за предложение: n/a \n")
+                        pass
+                    report.write('===========================================')
+                    return
+                report_creation()
         NLTK_method()
 
     __init__(1)
