@@ -1,18 +1,42 @@
 ===========================================
 Показатели с NLTK
 ===========================================
-Общее количество слов : 315
-Частота :Counter({'Lorem': 18, 'Ipsum': 17, 'text': 5, '1': 5, '10': 5, 'Latin': 4, 'words': 4, 'like': 3, 'versions': 3, 'use': 3, 'making': 3, 'injected': 3, 'humour': 3, '32': 3, 'simply': 2, 'dummy': 2, 'typesetting': 2, 'industry': 2, 'standard': 2, 'since': 2, '1500s': 2, 'type': 2, 'book': 2, 'also': 2, 'passages': 2, 'desktop': 2, 'publishing': 2, 'readable': 2, 'content': 2, 'page': 2, 'using': 2, 'look': 2, 'English': 2, 'web': 2, 'model': 2, 'ipsum': 2, 'many': 2, 'years': 2, 'sometimes': 2, 'popular': 2, 'classical': 2, 'literature': 2, '45': 2, 'BC': 2, 'passage': 2, 'going': 2, 'comes': 2, '33': 2, 'de': 2, 'Finibus': 2, 'Bonorum': 2, 'et': 2, 'Malorum': 2, 'Cicero': 2, 'first': 2, 'line': 2, 'reproduced': 2, 'form': 2, 'Internet': 2, 'printing': 1, 'ever': 1, 'unknown': 1, 'printer': 1, 'took': 1, 'galley': 1, 'scrambled': 1, 'make': 1, 'specimen': 1, 'survived': 1, 'five': 1, 'centuries': 1, 'leap': 1, 'electronic': 1, 'remaining': 1, 'essentially': 1, 'unchanged': 1, 'popularised': 1, '1960s': 1, 'release': 1, 'Letraset': 1, 'sheets': 1, 'containing': 1, 'recently': 1, 'software': 1, 'Aldus': 1, 'PageMaker': 1, 'including': 1, 'long': 1, 'established': 1, 'fact': 1, 'reader': 1, 'distracted': 1, 'looking': 1, 'layout': 1, 'point': 1, 'less': 1, 'normal': 1, 'distribution': 1, 'letters': 1, 'opposed': 1, 'Content': 1, 'Many': 1, 'packages': 1, 'editors': 1, 'default': 1, 'search': 1, 'lorem': 1, 'uncover': 1, 'sites': 1, 'still': 1, 'infancy': 1, 'Various': 1, 'evolved': 1, 'accident': 1, 'purpose': 1, 'come': 1, 'Contrary': 1, 'belief': 1, 'random': 1, 'roots': 1, 'piece': 1, '2000': 1, 'old': 1, 'Richard': 1, 'McClintock': 1, 'professor': 1, 'Hampden': 1, 'Sydney': 1, 'College': 1, 'Virginia': 1, 'looked': 1, 'one': 1, 'obscure': 1, 'consectetur': 1, 'cites': 1, 'word': 1, 'discovered': 1, 'undoubtable': 1, 'source': 1, 'sections': 1, 'Extremes': 1, 'Good': 1, 'Evil': 1, 'written': 1, 'treatise': 1, 'theory': 1, 'ethics': 1, 'Renaissance': 1, 'dolor': 1, 'sit': 1, 'amet': 1, 'section': 1, 'chunk': 1, 'used': 1, 'interested': 1, 'Sections': 1, 'exact': 1, 'original': 1, 'accompanied': 1, '1914': 1, 'translation': 1, 'H': 1, 'Rackham': 1, 'get': 1, 'variations': 1, 'available': 1, 'majority': 1, 'suffered': 1, 'alteration': 1, 'randomised': 1, 'even': 1, 'slightly': 1, 'believable': 1, 'need': 1, 'sure': 1, 'anything': 1, 'embarrassing': 1, 'hidden': 1, 'middle': 1, 'generators': 1, 'tend': 1, 'repeat': 1, 'predefined': 1, 'chunks': 1, 'necessary': 1, 'true': 1, 'generator': 1, 'uses': 1, 'dictionary': 1, '200': 1, 'combined': 1, 'handful': 1, 'sentence': 1, 'structures': 1, 'generate': 1, 'looks': 1, 'reasonable': 1, 'generated': 1, 'therefore': 1, 'always': 1, 'free': 1, 'repetition': 1, 'non': 1, 'characteristic': 1, 'etc': 1})
-Частоупотребляемые слова (топ 10): Lorem: 18 Ipsum: 17 text: 5 1: 5 10: 5 Latin: 4 words: 4 like: 3 versions: 3 use: 3 
+Общее количество слов : 69
+
+Частота: 
+1)readability - 4; 2)syllables - 4; 3)computer - 2; 
+4)estimate - 2; 5)word - 2; 6)length - 2; 
+7)letters - 2; 8)formula - 2; 9)predictors - 2; 
+10)per - 2; 11)100 - 2; 12)words - 2; 
+13)Existing - 1; 14)programs - 1; 15)measure - 1; 
+16)based - 1; 17)largely - 1; 18)upon - 1; 
+19)subroutines - 1; 20)number - 1; 21)usually - 1; 
+22)counting - 1; 23)vowels - 1; 24)shortcoming - 1; 
+25)estimating - 1; 26)necessitates - 1; 27)keypunching - 1; 
+28)prose - 1; 29)need - 1; 30)since - 1; 
+31)better - 1; 32)predictor - 1; 33)Therefore - 1; 
+34)new - 1; 35)computed - 1; 36)sentences - 1; 
+37)counted - 1; 38)optical - 1; 39)scanning - 1; 
+40)device - 1; 41)thus - 1; 42)makes - 1; 
+43)economically - 1; 44)feasible - 1; 45)organization - 1; 
+46)U - 1; 47)Office - 1; 48)Education - 1; 
+49)calibrate - 1; 50)textbooks - 1; 51)public - 1; 
+52)school - 1; 53)system - 1; 
+
+Частоупотребляемые слова (топ 10):
+1)readability - 4; 2)syllables - 4; 3)computer - 2; 
+4)estimate - 2; 5)word - 2; 6)length - 2; 
+7)letters - 2; 8)formula - 2; 9)predictors - 2; 
+10)per - 2; 
+
 Индексы читаемости: 
-1) Flesch–Kincaid readability tests: 62.07
-Интерпретация сложности: Уровень сложности текста - 8-9 класс 
-(Plain English. Easily understood by 13- to 15-year-old students)
-2) Gunning fog index: 8.881
-3) SMOG index: 6.672
-4) Coleman_Liau_index: 12.114
-5) ARI_index: 3661.078
-Среднее значение по всем индексам: 750.163
-Медианное значение по всем индексам: 12.114
-Среднее количество слов за предложение: 20.308
+1) Flesch–Kincaid index: 13.043
+2) Gunning fog index: 12.267
+3) SMOG index: 10.355
+4) Coleman_Liau_index: 14.278
+5) ARI_index: 15.651
+
+Среднее значение по всем индексам: 13.119
+Медианное значение по всем индексам: 13.043
+Среднее количество слов за предложение: 24.0
 ===========================================
