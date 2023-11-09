@@ -1,0 +1,29 @@
+Скрипт для анализа текста Text-analysis
+
+В папке Text_examples находятся примеры текстов для анализа (пока что доступны тексты на английском), можно загружать свои примеры в данную папку
+В папке reports собираются реузльтаты по анализа текста 
+
+Переменные которые можно изменять в скрипте:
+
+1) text_file_name (28 строка) - наименование txt файла который необходимо проанализировать
+2) number_of_top_common_words - количество частоупотребляемых слов в топе (по умолчанию 10)
+
+Описание скрипта
+
+Скрипт считывает текст и подсчитывает ряд лингвистических метрик, а именно
+
+i) Предоставляет частоупотребляемые слова в тексте;
+ii) Счиитает топ частоупотребляемых слов;
+iii) Общее количество слов;
+iv) Индексы читаемости;
+	1) Flesch-Kincaid index https://en.wikipedia.org/wiki/Gunning_fog_index;
+	2) Gunning fog index https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests;
+	3) SMOG index https://en.wikipedia.org/wiki/SMOG;
+	4) Coleman-Liau index https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index;
+	5) Automated readability index index Automated readability index;
+	6) Среднее значение по индексам;
+	7) Медианное значение по индексам;
+v) Среднее количество слов за предложение
+
+
+2023
