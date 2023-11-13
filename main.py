@@ -12,6 +12,10 @@ from nltk.corpus import stopwords
 from collections import Counter
 from textstat import flesch_reading_ease
 # nltk.download('stopwords')
+#
+# stopwords_path = nltk.data.find('corpora/stopwords.zip')
+# print(f"stopwords path is {stopwords_path}")
+
 
 class Text_analysis:
     # нужно делать проверку каждого слова на принадлежность к языку с помощью комплексного сравнения (берем по 3-4 слова проводим анализ по каждому, потому по перебору, потом
@@ -25,7 +29,7 @@ class Text_analysis:
             global text
             global text_file_name
             try:
-                text_file_name = 'green eggs and ham.txt'
+                text_file_name = 'x en.txt'
                 text_folder = os.path.join(curr_directory, 'Text_examples')
                 text_file_directory_and_name = os.path.join(text_folder, text_file_name)
                 #Открытие временного тхт (нужно заменить на 1) либо автоматический забор текста по юрл , либо окошком с возможностью загрузки текста
@@ -62,7 +66,7 @@ class Text_analysis:
         words = re.findall(r'\w+', text)
         sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s',text)
         #Использование фильтрации частиц, артиклей, предлогов с помощью nltk
-        stop_words = set(stopwords.words('English'))
+        stop_words = set(stopwords.words('english')) #Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
         filtered_words = [word for word in words if word.lower() not in stop_words]
         #Реализация скрипта с фильтрацией через NLTK
         def NLTK_method():
@@ -173,6 +177,24 @@ class Text_analysis:
                 # print('ARI IND', ari_index)
                 return ari_index
             ariindex = ARI_index()
+            #Индекс лексической плотностии - считается как отношение количества уникальных слов к общему количеству слов
+            def lexical_density_index(): #Индекс лексической плотности
+                word_count = len(words)
+                unique_words = set(words)
+                unique_words_count = len(unique_words)
+                # print(unique_words_count)
+                # print(word_count)
+                # print(f'unique words {unique_words}')
+                ldi = unique_words_count / word_count
+                # print(f"ldi {ldi}")
+
+                return ldi
+            lexical_density_index()
+
+            def tendences():
+
+                return
+            
 
             #Среднее и медиана по всем индексам
             avg_index = (fkrt_index + gunning + smog + coleman + ariindex)/5
@@ -257,6 +279,10 @@ class Text_analysis:
                     except Exception as e:
                         report.write(str(f"Медианное значение по всем индексам: n/a \n"))
                         pass
+                    try:
+                        report.write(f"Лексическая плотность: {round(lexical_density_index(), 3)}\n")
+                    except Exception as e:
+                        report.write(f"Лексическая плотность: n/a\n")
                     try:
                         report.write(f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
                     except Exception as e:
