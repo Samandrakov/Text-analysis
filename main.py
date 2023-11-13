@@ -3,6 +3,10 @@ import os
 import uuid
 import statistics
 import nltk
+import tkinter as tk
+from tkinter import *
+from tkinter import ttk
+from tkinter import messagebox as mb
 from langdetect import detect
 from langdetect import detect_langs
 import langid #альтернатива langdetect
@@ -22,6 +26,7 @@ class Text_analysis:
     # берем среднюю и присваиваем итоговое значение языка слову
     # Установка списков языков
     def __init__(self):
+
         curr_directory = os.getcwd()
         DetectorFactory.seed = 0
         # detect.set_languages
@@ -190,10 +195,6 @@ class Text_analysis:
 
                 return ldi
             lexical_density_index()
-
-            def tendences():
-
-                return
             
 
             #Среднее и медиана по всем индексам
@@ -291,6 +292,87 @@ class Text_analysis:
                     report.write('===========================================')
                     return
                 report_creation()
+
+            def root_window():
+                global avg_index
+                root = tk.Tk()
+                root.title("Анализ текста")
+
+                def send_text():
+                    avg_index = (fkrt_index + gunning + smog + coleman + ariindex) / 5
+                    median_ind = (statistics.median([fkrt_index, gunning, smog, coleman, ariindex]))
+
+                    try:
+                        root.destroy()
+                    except Exception as e:
+                        root.destroy()
+                    result_window = tk.Tk()
+                    result_window.title("Результат")
+                    intro_label = tk.Label(result_window, text="Результат", font=("Arial", 20))
+                    intro_label.pack(padx=150, pady=10)
+
+                    resourses_path = os.path.join(curr_directory,'resourses')
+                    ref_pic_1_path = os.path.join(resourses_path, 'Readability_index_rating_scale.bmp')
+                    print(ref_pic_1_path)
+                    # ref_pic_1 = PhotoImage(ref_pic_1_path)
+                    # ref_pic_1 = PhotoImage('./resourses/Readability_index_rating_scale.png')
+                    # label_pic_1 = tk.Label(image=ref_pic_1, compound='top')
+                    # label_pic_1.pack()
+
+                    label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n")
+                    label_2 = tk.Label(result_window, text=f"2) Gunning fog index: {round(gunning, 3)}\n")
+                    label_3 = tk.Label(result_window, text=f"3) SMOG index: {round(smog, 3)}\n")
+                    label_4 = tk.Label(result_window, text=f"4) Coleman_Liau_index: {round(coleman, 3)}\n")
+                    label_5 = tk.Label(result_window, text=f"5) ARI_index: {round(ariindex, 3)}\n")
+                    label_6 = tk.Label(result_window, text=f"Среднее значение по всем индексам: {round(avg_index, 3)}\n")
+                    label_7 = tk.Label(result_window, text=f"Медианное значение по всем индексам: {round(median_ind, 3)}\n")
+                    label_8 = tk.Label(result_window, text=f"Лексическая плотность: {round(lexical_density_index(), 3)}\n")
+                    label_9 = tk.Label(result_window, text=f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
+                    label_10 = tk.Label(result_window, text='Label 10')
+                    label_11 = tk.Label(result_window, text='Label 11')
+                    label_12 = tk.Label(result_window, text='Label 12')
+
+                    label_1.pack(padx=10, pady=10)
+                    label_2.pack(padx=10, pady=10)
+                    label_3.pack(padx=10, pady=10)
+                    label_4.pack(padx=10, pady=10)
+                    label_5.pack(padx=10, pady=10)
+                    label_6.pack(padx=10, pady=10)
+                    label_7.pack(padx=10, pady=10)
+                    label_8.pack(padx=10, pady=10)
+                    label_9.pack(padx=10, pady=10)
+                    label_10.pack(padx=10, pady=10)
+                    label_11.pack(padx=10, pady=10)
+                    label_12.pack(padx=10, pady=10)
+                    entered_text = entry.get()
+                    if entered_text:
+                        print("Sent text:", entered_text)
+
+                def exit_program():
+                    cap = None
+                    if cap is not None:
+                        cap.release()
+                    root.destroy()
+
+                # Окно с надписью "Система мониторинга"
+                intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
+                intro_label.pack(padx=150, pady=10)
+
+                # Окно для текста
+                entry = tk.Entry(root, width=50)
+                entry.pack(pady=10)
+                select_button = tk.Button(root, text="Обработать текст", command=send_text, )
+                select_button.pack(padx=10, pady=10)
+
+                # Показываем кнопку "завершение работы"
+                exit_button = tk.Button(root, text="Завершение работы", command=exit_program)
+                exit_button.pack(padx=20, pady=10)
+
+                root.mainloop()
+
+            root_window()
+
+
         NLTK_method()
 
     __init__(1)
