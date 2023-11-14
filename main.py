@@ -45,7 +45,6 @@ class Text_analysis:
             intro_label.pack(padx=150, pady=10)
 
             #Начало работы скрипта по анализу текста
-            #Создание отчета
 
             def text_analysis():
 
@@ -63,29 +62,22 @@ class Text_analysis:
                 number_of_top_common_words = 10
                 most_common_words = words_freq.most_common(number_of_top_common_words)
                 words_frequency = words_freq.most_common()
-                # Тесты Флеша–Кинкейда на читаемость
-
                 average_words_per_sentence = total_not_filtered_words / len(sentences)
-                # print(readability_score,type(readability_score))
+
+                # Тесты  на читаемость
                 def FKrt_index():
                     word_count = len(words)
-                    # print("Количество слов", word_count)
                     sentence_count = len(sentences)
-                    # print("Количество предложений", sentence_count)
-                    # print("Все слова, которые употребляются в источнике", words)
                     total_syllables = sum(len(dic_en.inserted(word).split('-')) for word in words)
-                    # print('Общее количество слогов',total_syllables)
                     index = 0.39 * (word_count / sentence_count) + 11.8 * (total_syllables / word_count) - 15.59
                     print('индекс FKRT',index)
                     return index
 
                 fkrt_index = FKrt_index()
                 def gunning_fog_index():
-                    # Do not include proper nouns, familiar jargon, or compound words. Do not include common suffixes (such as -es, -ed, or -ing) as a syllable (информация требует проверки);
                     word_count = len(words)
                     sentence_count = len(sentences)
                     syllables_list = [dic_en.inserted(word).split('-') for word in words]
-                    # Счет слогов
                     complex_word_count = 0
                     for word_syllables in syllables_list:
                         word = ''.join(word_syllables)
@@ -97,7 +89,7 @@ class Text_analysis:
                     return fog_index
 
                 gunning = gunning_fog_index()
-                print(gunning)
+
                 def SMOG_index():
                     sentence_count = len(sentences)
                     syllables_list = [dic_en.inserted(word).split('-') for word in words]
@@ -113,51 +105,37 @@ class Text_analysis:
                 smog = SMOG_index()
                 def Coleman_Liau_index():
                     character_count = sum(len(word) for word in words)
-                    # print('char count', character_count)
                     sentences = text.split('. ')
-                    # print('tot words', total_not_filtered_words)
                     sentences_count = len(sentences)
-                    # print('sent count',sentences_count)
                     # Среднее количество символов в 100 словах
                     l = (character_count / total_not_filtered_words) * 100
-                    # print('l', l)
                     # Среднее количество предложений на 100 слов
                     s = (sentences_count / total_not_filtered_words) * 100
-                    # print('s', s)
                     collind = 0.0588 * l - 0.296 * s - 15.8
                     print('Coleman_Liau_index: ', collind)
                     return collind
 
                 coleman = Coleman_Liau_index()
-                print(coleman)
                 def ARI_index():
                     character_count = sum(len(word) for word in words)
-                    # print('char count',character_count)
                     sentences = text.split('. ')
                     sentences_count = len(sentences)
-                    # print('sent count', sentences_count)
                     # Среднее количество символов в 100 словах
                     avg_char_per_wrd = (character_count / total_not_filtered_words) * 100
-                    # print('avg_char_per_wrd', avg_char_per_wrd)
                     # Среднее количество предложений на 100 слов
                     avg_wrd_per_sentence = (total_not_filtered_words / sentences_count) * 100
                     # print(average_words_per_sentence)
                     # print('avg_wrd_per_sentence', avg_wrd_per_sentence)
-                    ari_index = 4.71 * (character_count / total_not_filtered_words) + 0.5 * (
-                                total_not_filtered_words / sentences_count) - 21.43
+                    ari_index = 4.71 * (character_count / total_not_filtered_words) + 0.5 * (total_not_filtered_words / sentences_count) - 21.43
                     print('ARI IND', ari_index)
                     return ari_index
 
                 ariindex = ARI_index()
-                print(ariindex)
                 # Индекс лексической плотностии - считается как отношение количества уникальных слов к общему количеству слов
                 def lexical_density_index():  # Индекс лексической плотности
                     word_count = len(words)
                     unique_words = set(words)
                     unique_words_count = len(unique_words)
-                    # print(unique_words_count)
-                    # print(word_count)
-                    # print(f'unique words {unique_words}')
                     ldi = unique_words_count / word_count
                     print(f"lexical_density_index: {ldi}")
                     return ldi
@@ -167,11 +145,12 @@ class Text_analysis:
                 print(f"Avg_index: {avg_index}")
                 median_ind = (statistics.median([fkrt_index, gunning, smog, coleman, ariindex]))
                 print(f"Median_index: {median_ind}")
+
+                # Создание отчета
                 def create_report():
                     curr_directory = os.getcwd()
                     DetectorFactory.seed = 0
                     try:
-
                         report_folder = os.path.join(curr_directory, "reports")
                         if not os.path.exists(report_folder):
                             os.mkdir(report_folder)
@@ -268,7 +247,6 @@ class Text_analysis:
                     except Exception as e:
                         print('Error - cannot create a report file')
                         pass
-
                 label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n")
                 label_2 = tk.Label(result_window, text=f"2) Gunning fog index: {round(gunning, 3)}\n")
                 label_3 = tk.Label(result_window, text=f"3) SMOG index: {round(smog, 3)}\n")
@@ -277,11 +255,7 @@ class Text_analysis:
                 label_6 = tk.Label(result_window, text=f"Среднее значение по всем индексам: {round(avg_index, 3)}\n")
                 label_7 = tk.Label(result_window, text=f"Медианное значение по всем индексам: {round(median_ind, 3)}\n")
                 label_8 = tk.Label(result_window, text=f"Лексическая плотность: {round(lexical_density_index(), 3)}\n")
-                label_9 = tk.Label(result_window,
-                                   text=f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
-                label_10 = tk.Label(result_window, text='Label 10')
-                label_11 = tk.Label(result_window, text='Label 11')
-                label_12 = tk.Label(result_window, text='Label 12')
+                label_9 = tk.Label(result_window, text=f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
                 label_1.pack(padx=10, pady=10)
                 label_2.pack(padx=10, pady=10)
                 label_3.pack(padx=10, pady=10)
@@ -291,23 +265,14 @@ class Text_analysis:
                 label_7.pack(padx=10, pady=10)
                 label_8.pack(padx=10, pady=10)
                 label_9.pack(padx=10, pady=10)
-                label_10.pack(padx=10, pady=10)
-                label_11.pack(padx=10, pady=10)
-                label_12.pack(padx=10, pady=10)
-
                 create_report()
-
             text_analysis()
-
             return
-
-
         def exit_program():
             cap = None
             if cap is not None:
                 cap.release()
             root.destroy()
-
 
         # Окно для текста
         entry = tk.Text(root, width=50, height=10)
