@@ -1,11 +1,19 @@
 import tkinter as tk
 from tkinter import ttk
-from nltk.tokenize import sent_tokenize, word_tokenize
+from tkinter import messagebox
+from nltk.tokenize import word_tokenize
+from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from collections import Counter
 
-
+def paste_text(event):
+    try:
+        text = root.clipboard_get()
+        text_entry.insert(tk.INSERT, text)
+        text_entry.bind("<Control-v>", paste_text)
+    except tk.TclError:
+        messagebox.showerror("Ошибка", "Не удалось вставить текст")
 def get_word_frequency():
     global text_parts, word_freq, word_list
     text = text_entry.get("1.0", tk.END)
@@ -27,6 +35,8 @@ def get_word_frequency():
     for word in word_list:
         word_combobox.insert(tk.END, f"{word} ({word_freq[word]})")
 
+    # Обновление облака слов
+    generate_wordcloud()
 
 def plot_word_usage():
     global old_canvas
@@ -49,7 +59,7 @@ def plot_word_usage():
         ax.plot(range(1, len(text_parts) + 1), word_part_freq, marker='o', linestyle='-', label=f'{selected_item}')
 
         for i, freq in enumerate(word_part_freq, start=1):
-            ax.text(i, freq, f'{freq:.2f}', ha='center', va='bottom', fontsize=8)
+            ax.text(i, freq, f'{freq:.4f}', ha='center', va='bottom', fontsize=8)
 
     ax.set_xlabel('Части текста')
     ax.set_ylabel('Относительная частота слова')
@@ -61,6 +71,20 @@ def plot_word_usage():
     canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
     old_canvas = canvas
 
+def generate_wordcloud():
+    global old_canvas
+    text = text_entry.get("1.0", tk.END)
+    words = word_tokenize(text)
+    word_freq = dict(Counter(words))
+
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(word_freq)
+
+    plt.figure(figsize=(8, 4))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    plt.tight_layout(pad=0)
+    plt.show()
+    old_canvas = None
 
 root = tk.Tk()
 root.title("Анализатор текста")
