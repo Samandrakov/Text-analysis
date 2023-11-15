@@ -2,7 +2,11 @@ import re
 import os
 import statistics
 import nltk
+from nltk.tokenize import word_tokenize
 import tkinter as tk
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from wordcloud import WordCloud
 from tkinter import *
 from tkinter import messagebox as mb
 from langdetect import detect
@@ -14,8 +18,6 @@ from threading import Thread
 from nltk.corpus import stopwords
 from collections import Counter
 
-
-
 #Скачивание модуля для фильтрации слов  (если запускаете в первый раз, необходимо его скачать
 # nltk.download('stopwords')
 #Решение для обнаружения пакета линуксом
@@ -24,36 +26,111 @@ from collections import Counter
 
 class Text_analysis:
     def GUI_start():
+
         root = tk.Tk()
         root.title("Анализ текста")
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
         intro_label.pack(padx=150, pady=10)
         text = 0
+
+        # Новое окно, которое открывается после нажатия на кнопку
         def opening_the_text():
+            global result_window
             entered_text = entry.get("1.0",tk.END)
             if entered_text:
-                print("Sent text:", entered_text)
-            text = entered_text
-
-            try:
-                root.destroy()
-            except Exception as e:
-                root.destroy()
+                # print("Sent text:", entered_text)
+                text = entered_text.lower()
+            words = re.findall(r'\w+', text)
+            stop_words = set(stopwords.words(
+                'english'))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+            filtered_words = [word for word in words if word.lower() not in stop_words]
+            # try:
+            #     root.destroy()
+            # except Exception as e:
+            #     root.destroy()
             result_window = tk.Tk()
             result_window.title("Результат")
             intro_label = tk.Label(result_window, text="Результат", font=("Arial", 20))
             intro_label.pack(padx=150, pady=10)
+            word_combobox = tk.Listbox(result_window, selectmode=tk.EXTENDED, width=60, height=10)
+            word_combobox.pack(pady=1)
 
+            def plot_word_usage():
+                global new_window
+                # old_canvas = None
+                # Очистка предыдущих графиков
+                # if old_canvas:
+                #     old_canvas.get_tk_widget().destroy()
+                selected_items = word_combobox.curselection()
+                fig, ax = plt.subplots(figsize=(8, 5))
+
+                for idx in selected_items:
+                    selected_item = word_list[int(idx)]
+                    word_part_freq = []
+                    for part in text_parts:
+                        words = word_tokenize(part)
+                        total_words = len(words)
+                        word_count = words.count(selected_item)
+                        relative_freq = word_count / total_words if total_words > 0 else 0
+                        word_part_freq.append(relative_freq)
+
+                    ax.plot(range(1, len(text_parts) + 1), word_part_freq, marker='o', linestyle='-',
+                            label=f'{selected_item}')
+
+                    for i, freq in enumerate(word_part_freq, start=1):
+                        ax.text(i, freq, f'{freq:.4f}', ha='center', va='bottom', fontsize=8)
+
+                ax.set_xlabel('Части текста')
+                ax.set_ylabel('Относительная частота слова')
+                ax.set_title(f'Относительная частота слов в частях текста')
+                ax.legend()
+                new_window = tk.Toplevel(result_window)
+                new_window.title("График")
+                canvas = FigureCanvasTkAgg(fig, master=new_window)
+                canvas.draw()
+                canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+                # old_canvas = canvas
+
+            select_button_for_graph = tk.Button(result_window, text="Построить график", command=plot_word_usage, )
+            select_button_for_graph.pack(padx=10, pady=10)
+            def get_word_frequency():
+                global text_parts, word_freq, word_list
+
+                # Разбиение текста на 10 частей (или ближе к 10)
+
+                text_parts = []
+                part_size = len(filtered_words) // 10
+                for i in range(0, len(filtered_words), part_size):
+                    text_parts.append(' '.join(filtered_words[i:i + part_size]))
+
+                # Подсчет частоты каждого слова в тексте
+                word_freq = dict(Counter(filtered_words))
+
+                # Заполнение listbox словами и их частотами
+                sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
+                word_list = list(sorted_word_freq.keys())
+                word_combobox.delete(0, tk.END)
+                for word in word_list:
+                    word_combobox.insert(tk.END, f"{word} ({word_freq[word]})")
+
+            get_word_frequency()
             #Начало работы скрипта по анализу текста
-
             def text_analysis():
+                global filtered_words
+                def detect_language(text):
+                    try:
+                        language = detect(text)
+                        return language
+                    except Exception as e:
+                        print(f"Error: {e}")
+                        return "Language detection failed"
 
+                print(detect_language(text))
                 words = re.findall(r'\w+', text)
                 print(f"Все слова в тексте: {words}")
                 sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s', text)
                 print(f"Предложения в тексте: {sentences}")
-                dic_ru = pyphen.Pyphen(lang='ru')
-                dic_en = pyphen.Pyphen(lang='en')
+                dic_en = pyphen.Pyphen(lang=f'{detect_language(text)}')
                 stop_words = set(stopwords.words('english'))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
                 filtered_words = [word for word in words if word.lower() not in stop_words]
                 total_words = len(filtered_words)
@@ -220,7 +297,6 @@ class Text_analysis:
                                 report.write(str(f"5) ARI_index: n/a \n"))
                                 pass
                             report.write("\n")
-                            # Нужно скорректировать индекс 1 и 5 (1 пересчитать, библиотека верно его считает, но выводит не в нужной шкале)
                             try:
                                 report.write(str(f"Среднее значение по всем индексам: {round(avg_index, 3)}\n"))
                             except Exception as e:
@@ -247,6 +323,20 @@ class Text_analysis:
                     except Exception as e:
                         print('Error - cannot create a report file')
                         pass
+
+                create_report()
+
+                def generate_wordcloud():
+                    word_freq = dict(Counter(filtered_words))
+                    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(
+                        word_freq)
+
+                    plt.figure(figsize=(8, 4))
+                    plt.imshow(wordcloud, interpolation='bilinear')
+                    plt.axis('off')
+                    plt.tight_layout(pad=0)
+                    plt.show()
+
                 label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n")
                 label_2 = tk.Label(result_window, text=f"2) Gunning fog index: {round(gunning, 3)}\n")
                 label_3 = tk.Label(result_window, text=f"3) SMOG index: {round(smog, 3)}\n")
@@ -256,23 +346,30 @@ class Text_analysis:
                 label_7 = tk.Label(result_window, text=f"Медианное значение по всем индексам: {round(median_ind, 3)}\n")
                 label_8 = tk.Label(result_window, text=f"Лексическая плотность: {round(lexical_density_index(), 3)}\n")
                 label_9 = tk.Label(result_window, text=f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
-                label_1.pack(padx=10, pady=10)
-                label_2.pack(padx=10, pady=10)
-                label_3.pack(padx=10, pady=10)
-                label_4.pack(padx=10, pady=10)
-                label_5.pack(padx=10, pady=10)
-                label_6.pack(padx=10, pady=10)
-                label_7.pack(padx=10, pady=10)
-                label_8.pack(padx=10, pady=10)
-                label_9.pack(padx=10, pady=10)
-                create_report()
+                label_1.pack(padx=10, pady=1)
+                label_2.pack(padx=10, pady=1)
+                label_3.pack(padx=10, pady=1)
+                label_4.pack(padx=10, pady=1)
+                label_5.pack(padx=10, pady=1)
+                label_6.pack(padx=10, pady=1)
+                label_7.pack(padx=10, pady=1)
+                label_8.pack(padx=10, pady=1)
+                label_9.pack(padx=10, pady=1)
+
+
+                generate_wordcloud()
             text_analysis()
             return
         def exit_program():
             cap = None
             if cap is not None:
-                cap.release()
+                print('0')
             root.destroy()
+            result_window.destroy()
+            plt.close()
+
+            new_window.destroy()
+
 
         # Окно для текста
         entry = tk.Text(root, width=50, height=10)
@@ -283,9 +380,11 @@ class Text_analysis:
         select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, )
         select_button.pack(padx=10, pady=10)
 
+
         # Показываем кнопку "завершение работы"
         exit_button = tk.Button(root, text="Завершение работы", command=exit_program)
         exit_button.pack(padx=20, pady=10)
+
 
         root.mainloop()
 

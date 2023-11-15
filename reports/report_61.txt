@@ -1,0 +1,203 @@
+ 1 Показатели с NLTK
+===========================================
+Общее количество слов : 828
+
+Частота: 
+1) countess - 13; 2) count - 11; 3) son - 9; 
+4) anna - 9; 5) one - 9; 6) visitor - 9; 
+7) said - 9; 8) well - 8; 9) man - 8; 
+10) prince - 6; 11) vasili - 6; 12) mikhaylovna - 6; 
+13) moscow - 6; 14) drawing - 6; 15) room - 6; 
+16) come - 6; 17) day - 5; 18) visitors - 5; 
+19) also - 5; 20) young - 5; 21) dear - 5; 
+22) back - 5; 23) pierre - 5; 24) policeman - 5; 
+25) princess - 4; 26) petersburg - 4; 27) daughter - 4; 
+28) knows - 4; 29) see - 4; 30) asked - 4; 
+31) would - 4; 32) say - 4; 33) bezukhov - 4; 
+34) bear - 4; 35) cyril - 4; 36) pavlovna - 3; 
+37) exception - 3; 38) guards - 3; 39) woman - 3; 
+40) air - 3; 41) dinner - 3; 42) everyone - 3; 
+43) without - 3; 44) health - 3; 45) sometimes - 3; 
+46) looking - 3; 47) dresses - 3; 48) rustling - 3; 
+49) poor - 3; 50) put - 3; 51) illegitimate - 3; 
+52) know - 3; 53) education - 3; 54) dolokhov - 3; 
+55) laugh - 3; 56) think - 3; 57) vladimirovich - 3; 
+58) fact - 3; 59) drubetskaya - 2; 60) behalf - 2; 
+61) boris - 2; 62) matter - 2; 63) emperor - 2; 
+64) made - 2; 65) transferred - 2; 66) regiment - 2; 
+67) rank - 2; 68) cornet - 2; 69) however - 2; 
+70) soon - 2; 71) reception - 2; 72) returned - 2; 
+73) went - 2; 74) rich - 2; 75) rostovs - 2; 
+76) bory - 2; 77) entered - 2; 78) educated - 2; 
+79) already - 2; 80) name - 2; 81) two - 2; 
+82) mother - 2; 83) bringing - 2; 84) handsome - 2; 
+85) came - 2; 86) another - 2; 87) forty - 2; 
+88) face - 2; 89) evidently - 2; 90) worn - 2; 
+91) receive - 2; 92) people - 2; 93) guests - 2; 
+94) mon - 2; 95) cher - 2; 96) chere - 2; 
+97) variation - 2; 98) family - 2; 99) repeated - 2; 
+100) hand - 2; 101) seen - 2; 102) still - 2; 
+103) bad - 2; 104) anteroom - 2; 105) pass - 2; 
+106) tables - 2; 107) set - 2; 108) table - 2; 
+109) dmitri - 2; 110) things - 2; 111) marya - 2; 
+112) footman - 2; 113) voice - 2; 114) moment - 2; 
+115) quite - 2; 116) saying - 2; 117) apraksina - 2; 
+118) delighted - 2; 119) away - 2; 120) conversation - 2; 
+121) hear - 2; 122) police - 2; 123) replied - 2; 
+124) figure - 2; 125) cut - 2; 126) ladies - 2; 
+127) could - 2; 128) children - 2; 129) remarked - 2; 
+130) ill - 2; 131) new_window - 1; 132) chapter - 1; 
+133) x - 1; 134) kept - 1; 135) promise - 1; 
+136) given - 1; 137) spoken - 1; 138) evening - 1; 
+139) soiree - 1; 140) mentioned - 1; 141) semenov - 1; 
+142) received - 1; 143) appointment - 1; 144) kutuzov - 1; 
+145) staff - 1; 146) despite - 1; 147) endeavors - 1; 
+148) entreaties - 1; 149) straight - 1; 150) relations - 1; 
+151) stayed - 1; 152) town - 1; 153) darling - 1; 
+154) line - 1; 155) childhood - 1; 156) lived - 1; 
+157) years - 1; 158) time - 1; 159) left - 1; 
+160) tenth - 1; 161) august - 1; 162) remained - 1; 
+163) equipment - 1; 164) join - 1; 165) march - 1; 
+166) radzivilov - 1; 167) st - 1; 168) natalia - 1; 
+169) youngest - 1; 170) named - 1; 171) nataly - 1; 
+172) ever - 1; 173) since - 1; 174) morning - 1; 
+175) carriages - 1; 176) six - 1; 177) horses - 1; 
+178) coming - 1; 179) going - 1; 180) continually - 1; 
+181) rostova - 1; 182) big - 1; 183) house - 1; 
+184) povarskaya - 1; 185) known - 1; 186) eldest - 1; 
+187) congratulate - 1; 188) constantly - 1; 189) succeeded - 1; 
+190) relays - 1; 191) five - 1; 192) thin - 1; 
+193) oriental - 1; 194) type - 1; 195) childbearing - 1; 
+196) twelve - 1; 197) languor - 1; 198) motion - 1; 
+199) speech - 1; 200) resulting - 1; 201) weakness - 1; 
+202) gave - 1; 203) distinguished - 1; 204) inspired - 1; 
+205) respect - 1; 206) member - 1; 207) household - 1; 
+208) seated - 1; 209) helped - 1; 210) entertain - 1; 
+211) inner - 1; 212) rooms - 1; 213) considering - 1; 
+214) necessary - 1; 215) take - 1; 216) part - 1; 
+217) receiving - 1; 218) met - 1; 219) saw - 1; 
+220) inviting - 1; 221) grateful - 1; 222) called - 1; 
+223) slightest - 1; 224) tone - 1; 225) whether - 1; 
+226) thank - 1; 227) ones - 1; 228) whose - 1; 
+229) keeping - 1; 230) mind - 1; 231) shall - 1; 
+232) offended - 1; 233) whole - 1; 234) beg - 1; 
+235) words - 1; 236) expression - 1; 237) full - 1; 
+238) cheerful - 1; 239) clean - 1; 240) shaven - 1; 
+241) firm - 1; 242) pressure - 1; 243) quick - 1; 
+244) bows - 1; 245) drew - 1; 246) chair - 1; 
+247) toward - 1; 248) jauntily - 1; 249) spreading - 1; 
+250) legs - 1; 251) putting - 1; 252) hands - 1; 
+253) knees - 1; 254) enjoys - 1; 255) life - 1; 
+256) live - 1; 257) swayed - 1; 258) fro - 1; 
+259) dignity - 1; 260) offered - 1; 261) surmises - 1; 
+262) weather - 1; 263) touched - 1; 264) questions - 1; 
+265) russian - 1; 266) self - 1; 267) confident - 1; 
+268) french - 1; 269) like - 1; 270) weary - 1; 
+271) unflinching - 1; 272) fulfillment - 1; 273) duty - 1; 
+274) rose - 1; 275) stroking - 1; 276) scanty - 1; 
+277) gray - 1; 278) hairs - 1; 279) bald - 1; 
+280) patch - 1; 281) way - 1; 282) conservatory - 1; 
+283) pantry - 1; 284) large - 1; 285) marble - 1; 
+286) dining - 1; 287) hall - 1; 288) eighty - 1; 
+289) footmen - 1; 290) silver - 1; 291) china - 1; 
+292) moving - 1; 293) unfolding - 1; 294) damask - 1; 
+295) linen - 1; 296) call - 1; 297) vasilevich - 1; 
+298) good - 1; 299) manager - 1; 300) affairs - 1; 
+301) pleasure - 1; 302) enormous - 1; 303) right - 1; 
+304) great - 1; 305) thing - 1; 306) serving - 1; 
+307) complacent - 1; 308) sigh - 1; 309) return - 1; 
+310) lvovna - 1; 311) karagina - 1; 312) announced - 1; 
+313) gigantic - 1; 314) bass - 1; 315) entering - 1; 
+316) reflected - 1; 317) took - 1; 318) pinch - 1; 
+319) gold - 1; 320) snuffbox - 1; 321) husband - 1; 
+322) portrait - 1; 323) callers - 1; 324) affected - 1; 
+325) ask - 1; 326) sad - 1; 327) finish - 1; 
+328) tall - 1; 329) stout - 1; 330) proud - 1; 
+331) round - 1; 332) faced - 1; 333) smiling - 1; 
+334) age - 1; 335) laid - 1; 336) child - 1; 
+337) razumovski - 1; 338) ball - 1; 339) sounds - 1; 
+340) animated - 1; 341) feminine - 1; 342) voices - 1; 
+343) interrupting - 1; 344) mingling - 1; 345) scraping - 1; 
+346) chairs - 1; 347) conversations - 1; 348) began - 1; 
+349) last - 1; 350) first - 1; 351) pause - 1; 
+352) rise - 1; 353) rustle - 1; 354) mamma - 1; 
+355) cloaks - 1; 356) mantles - 1; 357) drive - 1; 
+358) chief - 1; 359) topic - 1; 360) illness - 1; 
+361) wealthy - 1; 362) celebrated - 1; 363) beau - 1; 
+364) catherine - 1; 365) behaved - 1; 366) improperly - 1; 
+367) sorry - 1; 368) vexation - 1; 369) enough - 1; 
+370) kill - 1; 371) alluded - 1; 372) though - 1; 
+373) heard - 1; 374) cause - 1; 375) distress - 1; 
+376) fifteen - 1; 377) times - 1; 378) comes - 1; 
+379) modern - 1; 380) exclaimed - 1; 381) seems - 1; 
+382) abroad - 1; 383) allowed - 1; 384) liked - 1; 
+385) terrible - 1; 386) expelled - 1; 387) chose - 1; 
+388) friends - 1; 389) badly - 1; 390) interposed - 1; 
+391) certain - 1; 392) heaven - 1; 393) suffer - 1; 
+394) degraded - 1; 395) ranks - 1; 396) sent - 1; 
+397) anatole - 1; 398) kuragin - 1; 399) father - 1; 
+400) managed - 1; 401) somehow - 1; 402) get - 1; 
+403) affair - 1; 404) hushed - 1; 405) even - 1; 
+406) ordered - 1; 407) regular - 1; 408) brigands - 1; 
+409) especially - 1; 410) ivanovna - 1; 411) dolokhova - 1; 
+412) worthy - 1; 413) fancy - 1; 414) three - 1; 
+415) got - 1; 416) hold - 1; 417) somewhere - 1; 
+418) carriage - 1; 419) visit - 1; 420) actresses - 1; 
+421) tried - 1; 422) interfere - 1; 423) men - 1; 
+424) tied - 1; 425) moyka - 1; 426) canal - 1; 
+427) swimming - 1; 428) nice - 1; 429) must - 1; 
+430) shouted - 1; 431) dying - 1; 432) laughter - 1; 
+433) oh - 1; 434) dreadful - 1; 435) yet - 1; 
+436) help - 1; 437) laughing - 1; 438) rescue - 1; 
+439) continued - 1; 440) amuses - 1; 441) sensible - 1; 
+442) manner - 1; 443) clever - 1; 444) foreign - 1; 
+445) done - 1; 446) hope - 1; 447) spite - 1; 
+448) money - 1; 449) wanted - 1; 450) introduce - 1; 
+451) declined - 1; 452) daughters - 1; 453) consider - 1; 
+454) turning - 1; 455) girls - 1; 456) assumed - 1; 
+457) inattention - 1; 458) gesture - 1; 459) score - 1; 
+460) intervened - 1; 461) wishing - 1; 462) show - 1; 
+463) connections - 1; 464) knowledge - 1; 465) society - 1; 
+466) significantly - 1; 467) half - 1; 468) whisper - 1; 
+469) reputation - 1; 470) lost - 1; 471) favorite - 1; 
+472) old - 1; 473) year - 1; 474) ago - 1; 
+475) never - 1; 476) handsomer - 1; 477) much - 1; 
+478) altered - 1; 479) next - 1; 480) heir - 1; 
+481) wife - 1; 482) fond - 1; 483) looked - 1; 
+484) wrote - 1; 485) case - 1; 486) death - 1; 
+487) may - 1; 488) die - 1; 489) dr - 1; 
+490) lorrain - 1; 491) inherit - 1; 492) immense - 1; 
+493) fortune - 1; 494) thousand - 1; 495) serfs - 1; 
+496) millions - 1; 497) rubles - 1; 498) told - 1; 
+499) besides - 1; 500) second - 1; 501) cousin - 1; 
+502) godfather - 1; 503) added - 1; 504) attached - 1; 
+505) importance - 1; 506) arrived - 1; 507) yesterday - 1; 
+508) inspection - 1; 509) business - 1; 510) yes - 1; 
+511) pretext - 1; 512) hearing - 1; 513) capital - 1; 
+514) joke - 1; 515) seeing - 1; 516) elder - 1; 
+517) listening - 1; 518) turned - 1; 519) imagine - 1; 
+520) funny - 1; 521) waved - 1; 522) arms - 1; 
+523) impersonate - 1; 524) portly - 1; 525) form - 1; 
+526) shook - 1; 527) deep - 1; 528) ringing - 1; 
+529) always - 1; 530) eats - 1; 531) particular - 1; 
+532) drinks - 1; 533) dine - 1; 534) us - 1; 
+
+
+Частоупотребляемые слова (топ 10):
+1) countess - 13; 2) count - 11; 3) son - 9; 
+4) anna - 9; 5) one - 9; 6) visitor - 9; 
+7) said - 9; 8) well - 8; 9) man - 8; 
+10) prince - 6; 
+
+Индексы читаемости: 
+1) Flesch–Kincaid index: 8.181
+2) Gunning fog index: 9.27
+3) SMOG index: 5.549
+4) Coleman_Liau_index: 8.806
+5) ARI_index: 16.752
+
+Среднее значение по всем индексам: 9.712
+Медианное значение по всем индексам: 8.806
+Лексическая плотность: 0.366
+Среднее количество слов за предложение: 22.372
+===========================================
