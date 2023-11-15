@@ -55,6 +55,27 @@ class Text_analysis:
             word_combobox = tk.Listbox(result_window, selectmode=tk.EXTENDED, width=60, height=10)
             word_combobox.pack(pady=1)
 
+            def get_word_frequency():
+                global text_parts, word_freq, word_list
+
+                # Разбиение текста на 10 частей (или ближе к 10)
+                words = word_tokenize(text)
+                text_parts = []
+                part_size = len(words) // 10
+                for i in range(0, len(words), part_size):
+                    text_parts.append(' '.join(words[i:i + part_size]))
+
+                # Подсчет частоты каждого слова в тексте
+                word_freq = dict(Counter(filtered_words))
+
+                # Заполнение listbox словами и их частотами
+                sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
+                word_list = list(sorted_word_freq.keys())
+                word_combobox.delete(0, tk.END)
+                for word in word_list:
+                    word_combobox.insert(tk.END, f"{word} ({word_freq[word]})")
+
+            get_word_frequency()
             def plot_word_usage():
                 global new_window
                 # old_canvas = None
@@ -74,7 +95,7 @@ class Text_analysis:
                         relative_freq = word_count / total_words if total_words > 0 else 0
                         word_part_freq.append(relative_freq)
 
-                    ax.plot(range(1, len(text_parts) + 1), word_part_freq, marker='o', linestyle='-',
+                    ax.plot(range(1, len(text_parts)+1), word_part_freq, marker='o', linestyle='-',
                             label=f'{selected_item}')
 
                     for i, freq in enumerate(word_part_freq, start=1):
@@ -93,27 +114,7 @@ class Text_analysis:
 
             select_button_for_graph = tk.Button(result_window, text="Построить график", command=plot_word_usage, )
             select_button_for_graph.pack(padx=10, pady=10)
-            def get_word_frequency():
-                global text_parts, word_freq, word_list
 
-                # Разбиение текста на 10 частей (или ближе к 10)
-
-                text_parts = []
-                part_size = len(filtered_words) // 10
-                for i in range(0, len(filtered_words), part_size):
-                    text_parts.append(' '.join(filtered_words[i:i + part_size]))
-
-                # Подсчет частоты каждого слова в тексте
-                word_freq = dict(Counter(filtered_words))
-
-                # Заполнение listbox словами и их частотами
-                sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
-                word_list = list(sorted_word_freq.keys())
-                word_combobox.delete(0, tk.END)
-                for word in word_list:
-                    word_combobox.insert(tk.END, f"{word} ({word_freq[word]})")
-
-            get_word_frequency()
             #Начало работы скрипта по анализу текста
             def text_analysis():
                 global filtered_words
