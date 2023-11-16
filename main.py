@@ -19,10 +19,11 @@ from nltk.corpus import stopwords
 from collections import Counter
 
 #Скачивание модуля для фильтрации слов  (если запускаете в первый раз, необходимо его скачать
-# nltk.download('stopwords')
+nltk.download('stopwords')
+nltk.download('punkt')
 #Решение для обнаружения пакета линуксом
-# stopwords_path = nltk.data.find('corpora/stopwords.zip')
-# print(f"stopwords path is {stopwords_path}")
+stopwords_path = nltk.data.find('corpora/stopwords.zip')
+print(f"stopwords path is {stopwords_path}")
 
 class Text_analysis:
     def GUI_start():
@@ -32,14 +33,44 @@ class Text_analysis:
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
         intro_label.pack(padx=150, pady=10)
         text = 0
+        def error_window():
+            try:
+                result_window.destroy()
+            except Exception as e:
+                pass
+            try:
+                plt.close()
+            except Exception as e:
+                pass
+            try:
+                new_window.destroy()
+            except Exception as e:
+                pass
+            er_window = tk.Tk()
+            er_window.title('Error')
+            err_label = tk.Label(er_window, text="ОШИБКА",
+                                 font=("Arial", 20))
+            err_label_1 = tk.Label(er_window, text=" Слишком мало текста или его нет, повторите попытку",
+                                 font=("Arial", 20))
+            err_label.pack(padx=150, pady=40)
+            err_label_1.pack(padx=150, pady=40)
 
         # Новое окно, которое открывается после нажатия на кнопку
         def opening_the_text():
             global result_window
-            entered_text = entry.get("1.0",tk.END)
-            if entered_text:
-                # print("Sent text:", entered_text)
-                text = entered_text.lower()
+            try:
+                entered_text = entry.get("1.0",tk.END)
+                val_words = word_tokenize(entered_text)
+                if entered_text and len(val_words) > 3:
+                    # print("Sent text:", entered_text)
+                    text = entered_text.lower()
+                    print(f"Result = 1")
+                else:
+                    print(f"Result = 0")
+                    error_window()
+
+            except ValueError as v:
+                error_window()
             words = re.findall(r'\w+', text)
             stop_words = set(stopwords.words(
                 'english'))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
@@ -356,8 +387,8 @@ class Text_analysis:
                 label_7.pack(padx=10, pady=1)
                 label_8.pack(padx=10, pady=1)
                 label_9.pack(padx=10, pady=1)
-
-
+                #Вордклауд не компилируется, скорее всего из за того, что оно прикрепелно не к отдельному окну, а показано отдельно через PLT, хотя при компиляции как то
+                #затрагивается stopwords
                 generate_wordcloud()
             text_analysis()
             return
@@ -368,7 +399,6 @@ class Text_analysis:
             root.destroy()
             result_window.destroy()
             plt.close()
-
             new_window.destroy()
 
 
