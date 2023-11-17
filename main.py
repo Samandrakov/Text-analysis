@@ -2,6 +2,7 @@ import re
 import os
 import statistics
 import nltk
+from langcodes import Language #Нужно дополнительно устанавливать пакет language_data
 from nltk.tokenize import word_tokenize
 import tkinter as tk
 import matplotlib.pyplot as plt
@@ -152,10 +153,29 @@ class Text_analysis:
                 def detect_language(text):
                     try:
                         language = detect(text)
+                        lang = Language.get(language)
+                        full_language_name = lang.display_name(lang)
+                        full_language_name = full_language_name.lower()
+                        print(f"language code is {lang}")
+                        print(f"language is - {language}")
+                        print(f"Full language name is - {full_language_name}")
                         return language
                     except Exception as e:
                         print(f"Error: {e}")
                         return "Language detection failed"
+                def detect_lang_for_stopwords(text):
+                    try:
+                        language = detect(text)
+                        lang = Language.get(language)
+                        full_language_name = lang.display_name(lang)
+                        full_language_name = full_language_name.lower()
+                        # print(f"language code is {lang}")
+                        # print(f"language is - {language}")
+                        # print(f"Full language name is - {full_language_name}")
+                        return full_language_name
+                    except Exception as e:
+                        print(f"Error: {e}")
+                        return "Language detection for stopwords failed"
 
                 print(detect_language(text))
                 words = re.findall(r'\w+', text)
@@ -163,7 +183,7 @@ class Text_analysis:
                 sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s', text)
                 print(f"Предложения в тексте: {sentences}")
                 dic_en = pyphen.Pyphen(lang=f'{detect_language(text)}')
-                stop_words = set(stopwords.words('english'))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+                stop_words = set(stopwords.words(f"{detect_lang_for_stopwords}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
                 filtered_words = [word for word in words if word.lower() not in stop_words]
                 total_words = len(filtered_words)
                 total_not_filtered_words = len(words)
