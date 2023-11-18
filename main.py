@@ -76,9 +76,6 @@ class Text_analysis:
                     lang = Language.get(language)
                     full_language_name = lang.display_name(lang)
                     full_language_name = full_language_name.lower()
-                    # print(f"language code is {lang}")
-                    # print(f"language is - {language}")
-                    # print(f"Full language name is - {full_language_name}")
                     return full_language_name
                 except Exception as e:
                     print(f"Error: {e}")
@@ -86,10 +83,6 @@ class Text_analysis:
             words = re.findall(r'\w+', text)
             stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
             filtered_words = [word for word in words if word.lower() not in stop_words]
-            # try:
-            #     root.destroy()
-            # except Exception as e:
-            #     root.destroy()
             result_window = tk.Tk()
             result_window.title("Результат")
             intro_label = tk.Label(result_window, text="Результат", font=("Arial", 20))
@@ -99,17 +92,14 @@ class Text_analysis:
 
             def get_word_frequency():
                 global text_parts, word_freq, word_list
-
                 # Разбиение текста на 10 частей (или ближе к 10)
                 words = word_tokenize(text)
                 text_parts = []
                 part_size = len(words) // 10
                 for i in range(0, len(words), part_size):
                     text_parts.append(' '.join(words[i:i + part_size]))
-
                 # Подсчет частоты каждого слова в тексте
                 word_freq = dict(Counter(filtered_words))
-
                 # Заполнение listbox словами и их частотами
                 sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
                 word_list = list(sorted_word_freq.keys())
@@ -120,10 +110,6 @@ class Text_analysis:
             get_word_frequency()
             def plot_word_usage():
                 global new_window
-                # old_canvas = None
-                # Очистка предыдущих графиков
-                # if old_canvas:
-                #     old_canvas.get_tk_widget().destroy()
                 selected_items = word_combobox.curselection()
                 fig, ax = plt.subplots(figsize=(8, 5))
 
@@ -139,7 +125,6 @@ class Text_analysis:
 
                     ax.plot(range(1, len(text_parts)+1), word_part_freq, marker='o', linestyle='-',
                             label=f'{selected_item}')
-
                     for i, freq in enumerate(word_part_freq, start=1):
                         ax.text(i, freq, f'{freq:.4f}', ha='center', va='bottom', fontsize=8)
 
@@ -152,7 +137,6 @@ class Text_analysis:
                 canvas = FigureCanvasTkAgg(fig, master=new_window)
                 canvas.draw()
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-                # old_canvas = canvas
 
             select_button_for_graph = tk.Button(result_window, text="Построить график", command=plot_word_usage, )
             select_button_for_graph.pack(padx=10, pady=10)
@@ -166,9 +150,9 @@ class Text_analysis:
                         lang = Language.get(language)
                         full_language_name = lang.display_name(lang)
                         full_language_name = full_language_name.lower()
-                        print(f"language code is {lang}")
-                        print(f"language is - {language}")
-                        print(f"Full language name is - {full_language_name}")
+                        # print(f"language code is {lang}")
+                        # print(f"language is - {language}")
+                        # print(f"Full language name is - {full_language_name}")
                         return language
                     except Exception as e:
                         print(f"Error: {e}")
@@ -179,22 +163,18 @@ class Text_analysis:
                         lang = Language.get(language)
                         full_language_name = lang.display_name(lang)
                         full_language_name = full_language_name.lower()
-                        # print(f"language code is {lang}")
-                        # print(f"language is - {language}")
-                        # print(f"Full language name is - {full_language_name}")
                         return full_language_name
                     except Exception as e:
                         print(f"Error: {e}")
                         return "Language detection for stopwords failed"
 
-                print(detect_language(text))
                 words = re.findall(r'\w+', text)
-                print(f"Все слова в тексте: {words}")
+                # print(f"Все слова в тексте: {words}")
                 sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s', text)
-                print(f"Предложения в тексте: {sentences}")
+                # print(f"Предложения в тексте: {sentences}")
                 dic_en = pyphen.Pyphen(lang=f'{detect_language(text)}')
                 lang_for_stop = detect_lang_for_stopwords(text)
-                print(f"lang for stop var - {lang_for_stop}")
+                # print(f"lang for stop var - {lang_for_stop}")
                 stop_words = set(stopwords.words(f"{lang_for_stop}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
                 filtered_words = [word for word in words if word.lower() not in stop_words]
                 total_words = len(filtered_words)
