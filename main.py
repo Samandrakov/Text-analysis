@@ -63,18 +63,28 @@ class Text_analysis:
                 entered_text = entry.get("1.0",tk.END)
                 val_words = word_tokenize(entered_text)
                 if entered_text and len(val_words) > 3:
-                    # print("Sent text:", entered_text)
                     text = entered_text.lower()
-                    print(f"Result = 1")
                 else:
-                    print(f"Result = 0")
                     error_window()
 
             except ValueError as v:
                 error_window()
+
+            def detect_lang_for_stopwords_1(text):
+                try:
+                    language = detect(text)
+                    lang = Language.get(language)
+                    full_language_name = lang.display_name(lang)
+                    full_language_name = full_language_name.lower()
+                    # print(f"language code is {lang}")
+                    # print(f"language is - {language}")
+                    # print(f"Full language name is - {full_language_name}")
+                    return full_language_name
+                except Exception as e:
+                    print(f"Error: {e}")
+                    return "Language detection for stopwords failed"
             words = re.findall(r'\w+', text)
-            stop_words = set(stopwords.words(
-                'english'))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+            stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
             filtered_words = [word for word in words if word.lower() not in stop_words]
             # try:
             #     root.destroy()
@@ -183,7 +193,9 @@ class Text_analysis:
                 sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s', text)
                 print(f"Предложения в тексте: {sentences}")
                 dic_en = pyphen.Pyphen(lang=f'{detect_language(text)}')
-                stop_words = set(stopwords.words(f"{detect_lang_for_stopwords}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+                lang_for_stop = detect_lang_for_stopwords(text)
+                print(f"lang for stop var - {lang_for_stop}")
+                stop_words = set(stopwords.words(f"{lang_for_stop}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
                 filtered_words = [word for word in words if word.lower() not in stop_words]
                 total_words = len(filtered_words)
                 total_not_filtered_words = len(words)
