@@ -82,7 +82,12 @@ class Text_analysis:
                     print(f"Error: {e}")
                     return "Language detection for stopwords failed"
             words = re.findall(r'\w+', text)
-            stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+            try:
+                stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+            except Exception as e:
+                print(f"no stopwords")
+                stop_words = set(stopwords.words("english"))
+            # stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
             filtered_words = [word for word in words if word.lower() not in stop_words]
             result_window = tk.Tk()
             result_window.title("Результат")
@@ -177,7 +182,11 @@ class Text_analysis:
                 dic_en = pyphen.Pyphen(lang=f'{detect_language(text)}')
                 lang_for_stop = detect_lang_for_stopwords(text)
                 # print(f"lang for stop var - {lang_for_stop}")
-                stop_words = set(stopwords.words(f"{lang_for_stop}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+                try:
+                    stop_words = set(stopwords.words(f"{lang_for_stop}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
+                except Exception as e:
+                    print(f"no stopwords")
+                    stop_words = set(stopwords.words("english"))
                 filtered_words = [word for word in words if word.lower() not in stop_words]
                 total_words = len(filtered_words)
                 total_not_filtered_words = len(words)
