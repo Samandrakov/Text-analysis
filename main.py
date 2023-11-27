@@ -30,11 +30,13 @@ class Text_analysis:
     def GUI_start():
 
         root = tk.Tk()
+
         root.title("Анализ текста")
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
         intro_label.pack(padx=150, pady=10)
         text = 0
         def error_window():
+            global er_window
             try:
                 result_window.destroy()
             except Exception as e:
@@ -47,7 +49,7 @@ class Text_analysis:
                 new_window.destroy()
             except Exception as e:
                 pass
-            er_window = tk.Tk()
+
             er_window.title('Error')
             err_label = tk.Label(er_window, text="ОШИБКА",
                                  font=("Arial", 20))
@@ -119,7 +121,7 @@ class Text_analysis:
 
             get_word_frequency()
             def plot_word_usage():
-                global new_window
+                global graph_window
                 selected_items = word_combobox.curselection()
                 fig, ax = plt.subplots(figsize=(8, 5))
 
@@ -146,14 +148,14 @@ class Text_analysis:
                 #ax.axhline(0, color='black', linewidth=0.5)
 
 
-                new_window = tk.Toplevel(result_window)
-                new_window.title("График")
+                graph_window = tk.Toplevel(result_window)
+                graph_window.title("График")
                 # ax.spines['left'].set_position('zero')
                 ax.set_xticks(range(0, len(text_parts)+1 ))
                 # ax.axhline(0, color='black', linewidth=0.5)
                 # ax.set_xticks(range(1, len(text_parts) + 1))
                 # ax.set_yticks([0] + list(ax.get_yticks()))
-                canvas = FigureCanvasTkAgg(fig, master=new_window)
+                canvas = FigureCanvasTkAgg(fig, master=graph_window)
                 canvas.draw()
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
@@ -435,22 +437,27 @@ class Text_analysis:
             try:
                 root.destroy()
             except Exception as e:
+                print(f"Failed to close root")
                 pass
             try:
                 result_window.destroy()
             except Exception as e:
+                print(f"Failed to close result_window")
                 pass
             try:
-                error_window.destroy()
+                er_window.destroy()
             except Exception as e:
+                print(f"Failed to close error_window")
                 pass
             try:
                 plt.close()
             except Exception as e:
+                print(f"Failed to close graph")
                 pass
             try:
-                new_window.destroy()
+                graph_window.destroy()
             except Exception as e:
+                print(f"Failed to close graph_window")
                 pass
 
         # Окно для текста
