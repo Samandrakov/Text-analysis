@@ -8,14 +8,9 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 # from wordcloud import WordCloud
-from tkinter import *
-from tkinter import messagebox as mb
 from langdetect import detect
-from langdetect import detect_langs
 from langdetect import DetectorFactory
-#import langid #альтернатива langdetect
 import pyphen
-from threading import Thread
 from nltk.corpus import stopwords
 from collections import Counter
 
@@ -31,14 +26,16 @@ class Text_analysis:
 
         root = tk.Tk()
         root.title("Анализ текста")
-
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
         description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
         intro_label.pack(padx=150, pady=10)
         description_label.pack(padx=150, pady=10)
         text = 0
-        def error_window():
-            global er_window, graph_window
+
+        def not_enough_words_error():
+            print(0)
+        def error_window(): # Ошибка при пустом вводе
+            global graph_window
             try:
                 result_window.destroy()
             except Exception as e:
@@ -112,18 +109,22 @@ class Text_analysis:
                 text_parts = []
                 part_size = len(words) // 10
                 remainder = len(words) % 10 #Остаток
-                for i in range(0, len(words) - remainder, part_size):
-                    text_parts.append(' '.join(words[i:i + part_size]))
+                try:
+                    for i in range(0, len(words) - remainder, part_size):
+                        text_parts.append(' '.join(words[i:i + part_size]))
 
-                if remainder > 0:
-                    text_parts[-1] += ' '.join(words[-remainder:])
-                word_freq = dict(Counter(filtered_words))
-                # Заполнение listbox словами и их частотами
-                sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
-                word_list = list(sorted_word_freq.keys())
-                word_combobox.delete(0, tk.END)
-                for word in word_list:
-                    word_combobox.insert(tk.END, f"{word} ({word_freq[word]})")
+                    if remainder > 0:
+                        text_parts[-1] += ' '.join(words[-remainder:])
+                    word_freq = dict(Counter(filtered_words))
+                    # Заполнение listbox словами и их частотами
+                    sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
+                    word_list = list(sorted_word_freq.keys())
+                    word_combobox.delete(0, tk.END)
+                    for word in word_list:
+                        word_combobox.insert(tk.END, f"{word} ({word_freq[word]})")
+                except ValueError as v:
+                    error_window()
+                    print("Value Error in get_word_frequency function")
 
             get_word_frequency()
             def plot_word_usage():
@@ -444,7 +445,6 @@ class Text_analysis:
                 print(f"Failed to close result_window")
                 pass
             try:
-                # for window in
                 er_window.destroy()
             except Exception as e:
                 print(f"Failed to close error_window")
