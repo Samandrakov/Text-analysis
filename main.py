@@ -98,13 +98,17 @@ class Text_analysis:
 
             def get_word_frequency():
                 global text_parts, word_freq, word_list
-                # Разбиение текста на 10 частей (или ближе к 10)
+
+                # Разбиение текста на 10 частей
                 words = word_tokenize(text)
                 text_parts = []
                 part_size = len(words) // 10
-                for i in range(0, len(words), part_size):
+                remainder = len(words) % 10 #Остаток
+                for i in range(0, len(words) - remainder, part_size):
                     text_parts.append(' '.join(words[i:i + part_size]))
-                # Подсчет частоты каждого слова в тексте
+
+                if remainder > 0:
+                    text_parts[-1] += ' '.join(words[-remainder:])
                 word_freq = dict(Counter(filtered_words))
                 # Заполнение listbox словами и их частотами
                 sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
@@ -138,8 +142,17 @@ class Text_analysis:
                 ax.set_ylabel('Относительная частота слова')
                 ax.set_title(f'Относительная частота слов в частях текста')
                 ax.legend()
+
+                #ax.axhline(0, color='black', linewidth=0.5)
+
+
                 new_window = tk.Toplevel(result_window)
                 new_window.title("График")
+                # ax.spines['left'].set_position('zero')
+                ax.set_xticks(range(0, len(text_parts)+1 ))
+                # ax.axhline(0, color='black', linewidth=0.5)
+                # ax.set_xticks(range(1, len(text_parts) + 1))
+                # ax.set_yticks([0] + list(ax.get_yticks()))
                 canvas = FigureCanvasTkAgg(fig, master=new_window)
                 canvas.draw()
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
