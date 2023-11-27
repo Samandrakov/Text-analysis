@@ -30,13 +30,15 @@ class Text_analysis:
     def GUI_start():
 
         root = tk.Tk()
-
         root.title("Анализ текста")
+
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
+        description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
         intro_label.pack(padx=150, pady=10)
+        description_label.pack(padx=150, pady=10)
         text = 0
         def error_window():
-            global er_window
+            global er_window, graph_window
             try:
                 result_window.destroy()
             except Exception as e:
@@ -46,17 +48,21 @@ class Text_analysis:
             except Exception as e:
                 pass
             try:
-                new_window.destroy()
+                graph_window.destroy()
             except Exception as e:
                 pass
 
+            er_window = tk.Toplevel(root)
+            er_window.grab_set()
             er_window.title('Error')
+            er_window.geometry("400x200")
             err_label = tk.Label(er_window, text="ОШИБКА",
-                                 font=("Arial", 20))
-            err_label_1 = tk.Label(er_window, text=" Слишком мало текста или его нет, повторите попытку",
-                                 font=("Arial", 20))
-            err_label.pack(padx=150, pady=40)
-            err_label_1.pack(padx=150, pady=40)
+                                 font=("Arial", 14))
+            err_label_1 = tk.Label(er_window, text=" Слишком мало текста или его нет,\n пожалуйста, повторите попытку",
+                                 font=("Arial", 12))
+
+            err_label.pack(padx=70, pady=10)
+            err_label_1.pack(padx=70, pady=40)
 
         # Новое окно, которое открывается после нажатия на кнопку
         def opening_the_text():
@@ -144,17 +150,10 @@ class Text_analysis:
                 ax.set_ylabel('Относительная частота слова')
                 ax.set_title(f'Относительная частота слов в частях текста')
                 ax.legend()
-
-                #ax.axhline(0, color='black', linewidth=0.5)
-
-
                 graph_window = tk.Toplevel(result_window)
                 graph_window.title("График")
-                # ax.spines['left'].set_position('zero')
-                ax.set_xticks(range(0, len(text_parts)+1 ))
-                # ax.axhline(0, color='black', linewidth=0.5)
-                # ax.set_xticks(range(1, len(text_parts) + 1))
-                # ax.set_yticks([0] + list(ax.get_yticks()))
+                ax.set_xticks(range(1, len(text_parts)+1 ))
+                ax.set_ylim(0)
                 canvas = FigureCanvasTkAgg(fig, master=graph_window)
                 canvas.draw()
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
@@ -445,6 +444,7 @@ class Text_analysis:
                 print(f"Failed to close result_window")
                 pass
             try:
+                # for window in
                 er_window.destroy()
             except Exception as e:
                 print(f"Failed to close error_window")
@@ -461,7 +461,7 @@ class Text_analysis:
                 pass
 
         # Окно для текста
-        entry = tk.Text(root, width=50, height=10)
+        entry = tk.Text(root, width=70, height=15)
         entry.pack(pady=10)
 
         # entry = tk.Entry(root, width=50)
