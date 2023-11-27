@@ -432,11 +432,26 @@ class Text_analysis:
             cap = None
             if cap is not None:
                 print('0')
-            root.destroy()
-            result_window.destroy()
-            plt.close()
-            new_window.destroy()
-
+            try:
+                root.destroy()
+            except Exception as e:
+                pass
+            try:
+                result_window.destroy()
+            except Exception as e:
+                pass
+            try:
+                error_window.destroy()
+            except Exception as e:
+                pass
+            try:
+                plt.close()
+            except Exception as e:
+                pass
+            try:
+                new_window.destroy()
+            except Exception as e:
+                pass
 
         # Окно для текста
         entry = tk.Text(root, width=50, height=10)
