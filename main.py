@@ -5,6 +5,7 @@ import nltk
 from langcodes import Language #Нужно дополнительно устанавливать пакет language_data
 from nltk.tokenize import word_tokenize
 import tkinter as tk
+from tkinter import filedialog
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 # from wordcloud import WordCloud
@@ -13,6 +14,8 @@ from langdetect import DetectorFactory
 import pyphen
 from nltk.corpus import stopwords
 from collections import Counter
+from docx import Document
+import csv
 
 #Скачивание модуля для фильтрации слов  (если запускаете в первый раз, необходимо его скачать
 nltk.download('stopwords')
@@ -20,16 +23,52 @@ nltk.download('punkt')
 #Решение для обнаружения пакета линуксом
 stopwords_path = nltk.data.find('corpora/stopwords.zip')
 print(f"stopwords path is {stopwords_path}")
-
+button_flag = 0
+text_from_csv = ""
+csv_flag = 0
+text_from_txt = ""
+txt_flag = 0
+text_from_docx = ""
+docx_flag = 0
 class Text_analysis:
     def GUI_start():
-
         root = tk.Tk()
         root.title("Анализ текста")
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
         description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
         intro_label.pack(padx=150, pady=10)
         description_label.pack(padx=150, pady=10)
+
+        def open_file_dialog():
+            global button_flag
+            button_flag = 1
+            file_path = filedialog.askopenfilename(filetypes=[("Supported files", "*.csv;*.txt;*.docx")])
+            if file_path:
+                print("Выбранный файл:", file_path)
+                read_file_contents(file_path)
+
+        def read_file_contents(file_path):
+            global text_from_txt, text_from_docx, text_from_csv, csv_flag, txt_flag, docx_flag
+            if file_path.endswith('.csv'):
+                with open(file_path, 'r', encoding='utf-8') as csv_file:
+                    csv_reader = csv.reader(csv_file)
+                    rows = [','.join(row) for row in csv_reader if any(row)]
+                    text_from_csv = '\n'.join(rows)
+                    print(f"ТЕКСТ ИЗ CSV {text_from_csv}")
+                    csv_flag = 1
+                    print(f"csv_flag {csv_flag}")
+            elif file_path.endswith('.txt'):
+                with open(file_path, 'r', encoding='utf-8') as txt_file:
+                    text_from_txt = txt_file.read()
+                    print(f"ТЕКСТ ИЗ TXT {text_from_txt}")
+                    txt_flag = 1
+                    print(f"txt_flag {txt_flag}")
+            elif file_path.endswith('.docx'):
+                doc = Document(file_path)
+                text_from_docx = '\n'.join(paragraph.text for paragraph in doc.paragraphs if paragraph.text.strip())
+                print(f"ТЕКСТ ИЗ DOCX {text_from_docx}")
+                docx_flag = 1
+                print(f"docx_flag {docx_flag}")
         text = 0
 
         def not_enough_words_error():
@@ -62,16 +101,35 @@ class Text_analysis:
             err_label_1.pack(padx=70, pady=40)
 
         # Новое окно, которое открывается после нажатия на кнопку
-        def opening_the_text():
-            global result_window
-            try:
-                entered_text = entry.get("1.0",tk.END)
-                val_words = word_tokenize(entered_text)
-                if entered_text and len(val_words) > 3:
-                    text = entered_text.lower()
-                else:
-                    error_window()
 
+        def opening_the_text():
+            global result_window, button_flag, docx_flag, csv_flag, txt_flag, text_from_csv, text_from_txt, text_from_docx
+            try:
+                if button_flag == 0:
+                    entered_text = entry.get("1.0",tk.END)
+                    val_words = word_tokenize(entered_text)
+                    if entered_text and len(val_words) > 3:
+                        text = entered_text.lower()
+                    else:
+                        error_window()
+                else:
+                    if csv_flag == 1:
+                        entered_text = text_from_csv
+                        val_words = word_tokenize(entered_text)
+                        if entered_text and len(val_words) > 3:
+                            text = entered_text.lower()
+                    if docx_flag == 1:
+                        entered_text = text_from_docx
+                        val_words = word_tokenize(entered_text)
+                        if entered_text and len(val_words) > 3:
+                            text = entered_text.lower()
+                    if txt_flag == 1:
+                        entered_text = text_from_txt
+                        val_words = word_tokenize(entered_text)
+                        if entered_text and len(val_words) > 3:
+                            text = entered_text.lower()
+                    else:
+                        error_window()
             except ValueError as v:
                 error_window()
 
@@ -112,7 +170,6 @@ class Text_analysis:
                 try:
                     for i in range(0, len(words) - remainder, part_size):
                         text_parts.append(' '.join(words[i:i + part_size]))
-
                     if remainder > 0:
                         text_parts[-1] += ' '.join(words[-remainder:])
                     word_freq = dict(Counter(filtered_words))
@@ -460,6 +517,8 @@ class Text_analysis:
                 print(f"Failed to close graph_window")
                 pass
 
+
+
         # Окно для текста
         entry = tk.Text(root, width=70, height=15)
         entry.pack(pady=10)
@@ -468,6 +527,11 @@ class Text_analysis:
         # entry.pack(pady=10)
         select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, )
         select_button.pack(padx=10, pady=10)
+
+
+
+        upload_button = tk.Button(root, text="Выбрать файл", command=open_file_dialog)
+        upload_button.pack(padx=10, pady=10)
 
 
         # Показываем кнопку "завершение работы"
