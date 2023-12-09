@@ -5,6 +5,7 @@ import nltk
 from langcodes import Language #Нужно дополнительно устанавливать пакет language_data
 from nltk.tokenize import word_tokenize
 import tkinter as tk
+from tkinter import *
 from tkinter import filedialog
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -14,7 +15,7 @@ from langdetect import DetectorFactory
 import pyphen
 from nltk.corpus import stopwords
 from collections import Counter
-from docx import Document
+from docx import Document #python-docx lib
 import csv
 
 #Скачивание модуля для фильтрации слов  (если запускаете в первый раз, необходимо его скачать
@@ -35,9 +36,12 @@ class Text_analysis:
         root = tk.Tk()
         root.title("Анализ текста")
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
-        description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
         intro_label.pack(padx=150, pady=10)
+        description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
         description_label.pack(padx=150, pady=10)
+        # enabled = IntVar()
+        # enabled_checkbutton = tk.Checkbutton(text="Загрузить файл", variable=enabled)
+        # enabled_checkbutton.pack(padx=6, pady=6, anchor=NW)
 
         def open_file_dialog():
             global button_flag
@@ -103,7 +107,7 @@ class Text_analysis:
         # Новое окно, которое открывается после нажатия на кнопку
 
         def opening_the_text():
-            global result_window, button_flag, docx_flag, csv_flag, txt_flag, text_from_csv, text_from_txt, text_from_docx
+            global result_window, button_flag, docx_flag, csv_flag, txt_flag
             try:
                 if button_flag == 0:
                     entered_text = entry.get("1.0",tk.END)
@@ -139,7 +143,7 @@ class Text_analysis:
                     lang = Language.get(language)
                     en_full_language_name = lang.display_name('en')
                     full_language_name = en_full_language_name.lower()
-                    print(full_language_name)
+                    print(f"Language: {full_language_name}")
                     return full_language_name
                 except Exception as e:
                     print(f"Error: {e}")
@@ -152,6 +156,10 @@ class Text_analysis:
                 stop_words = set(stopwords.words("english"))
             # stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
             filtered_words = [word for word in words if word.lower() not in stop_words]
+            print(f"old filtered words with nums {filtered_words}")
+            pattern = re.compile(r'\d')
+            filtered_words = [word for word in filtered_words if not pattern.search(word)]
+            print(f"new filtered words list {filtered_words}")
             result_window = tk.Tk()
             result_window.title("Результат")
             intro_label = tk.Label(result_window, text="Результат", font=("Arial", 20))
@@ -169,7 +177,12 @@ class Text_analysis:
                 remainder = len(words) % 10 #Остаток
                 try:
                     for i in range(0, len(words) - remainder, part_size):
-                        text_parts.append(' '.join(words[i:i + part_size]))
+                        # if words[i].isdigit():
+                        if re.search("\d",words[i]):
+                            pass
+                        else:
+                            text_parts.append(' '.join(words[i:i + part_size]))
+                    # print(words)
                     if remainder > 0:
                         text_parts[-1] += ' '.join(words[-remainder:])
                     word_freq = dict(Counter(filtered_words))
@@ -260,6 +273,9 @@ class Text_analysis:
                     print(f"no stopwords")
                     stop_words = set(stopwords.words("english"))
                 filtered_words = [word for word in words if word.lower() not in stop_words]
+                pattern = re.compile(r'\d')
+                filtered_words = [word for word in filtered_words if not pattern.search(word)]
+
                 total_words = len(filtered_words)
                 total_not_filtered_words = len(words)
                 words_freq = Counter(filtered_words)
