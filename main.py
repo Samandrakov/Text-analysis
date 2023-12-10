@@ -9,7 +9,7 @@ from tkinter import *
 from tkinter import filedialog
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-# from wordcloud import WordCloud
+from wordcloud import WordCloud
 from langdetect import detect
 from langdetect import DetectorFactory
 import pyphen
@@ -469,16 +469,18 @@ class Text_analysis:
 
                 create_report()
 
-                # def generate_wordcloud():
-                #     word_freq = dict(Counter(filtered_words))
-                #     wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(
-                #         word_freq)
-                #
-                #     plt.figure(figsize=(8, 4))
-                #     plt.imshow(wordcloud, interpolation='bilinear')
-                #     plt.axis('off')
-                #     plt.tight_layout(pad=0)
-                #     plt.show()
+                #Нужно вставить wordcloud в окно tkinter
+                def generate_wordcloud():
+                    word_freq = dict(Counter(filtered_words))
+                    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(
+                        word_freq)
+
+                    plt.figure(figsize=(8, 4))
+                    plt.imshow(wordcloud, interpolation='bilinear')
+                    plt.axis('off')
+                    plt.tight_layout(pad=0)
+                    plt.show()
+
 
                 label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n")
                 label_2 = tk.Label(result_window, text=f"2) Gunning fog index: {round(gunning, 3)}\n")
@@ -500,7 +502,7 @@ class Text_analysis:
                 label_9.pack(padx=10, pady=1)
                 #Вордклауд не компилируется, скорее всего из за того, что оно прикрепелно не к отдельному окну, а показано отдельно через PLT, хотя при компиляции как то
                 #затрагивается stopwords
-                # generate_wordcloud()
+                generate_wordcloud()
             text_analysis()
             return
         def exit_program():
@@ -532,29 +534,16 @@ class Text_analysis:
             except Exception as e:
                 print(f"Failed to close graph_window")
                 pass
-
-
-
-        # Окно для текста
-        entry = tk.Text(root, width=70, height=15)
-        entry.pack(pady=10)
-
-        # entry = tk.Entry(root, width=50)
+        # Окно для текста Пока решил убрать, мешает
+        # entry = tk.Text(root, width=70, height=15)
         # entry.pack(pady=10)
         select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, )
         select_button.pack(padx=10, pady=10)
-
-
-
         upload_button = tk.Button(root, text="Выбрать файл", command=open_file_dialog)
         upload_button.pack(padx=10, pady=10)
-
-
         # Показываем кнопку "завершение работы"
         exit_button = tk.Button(root, text="Завершение работы", command=exit_program)
         exit_button.pack(padx=20, pady=10)
-
-
         root.mainloop()
 
     GUI_start()
