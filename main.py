@@ -5,7 +5,6 @@ import nltk
 from langcodes import Language #Нужно дополнительно устанавливать пакет language_data
 from nltk.tokenize import word_tokenize
 import tkinter as tk
-from tkinter import *
 from tkinter import filedialog
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -19,9 +18,12 @@ from docx import Document #python-docx lib
 import csv
 
 #Скачивание модуля для фильтрации слов  (если запускаете в первый раз, необходимо его скачать
+
 nltk.download('stopwords')
 nltk.download('punkt')
+
 #Решение для обнаружения пакета линуксом
+
 stopwords_path = nltk.data.find('corpora/stopwords.zip')
 print(f"stopwords path is {stopwords_path}")
 button_flag = 0
@@ -31,25 +33,15 @@ text_from_txt = ""
 txt_flag = 0
 text_from_docx = ""
 docx_flag = 0
+file_label = None
 class Text_analysis:
-    def GUI_start():
+    def GUI_start(self):
         root = tk.Tk()
         root.title("Анализ текста")
         intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
         intro_label.pack(padx=150, pady=10)
         description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
         description_label.pack(padx=150, pady=10)
-        # enabled = IntVar()
-        # enabled_checkbutton = tk.Checkbutton(text="Загрузить файл", variable=enabled)
-        # enabled_checkbutton.pack(padx=6, pady=6, anchor=NW)
-
-        def open_file_dialog():
-            global button_flag
-            button_flag = 1
-            file_path = filedialog.askopenfilename(filetypes=[("Supported files", "*.csv;*.txt;*.docx")])
-            if file_path:
-                print("Выбранный файл:", file_path)
-                read_file_contents(file_path)
 
         def read_file_contents(file_path):
             global text_from_txt, text_from_docx, text_from_csv, csv_flag, txt_flag, docx_flag
@@ -73,10 +65,47 @@ class Text_analysis:
                 print(f"ТЕКСТ ИЗ DOCX {text_from_docx}")
                 docx_flag = 1
                 print(f"docx_flag {docx_flag}")
-        text = 0
+        file_label_text = None
 
-        def not_enough_words_error():
-            print(0)
+        def limit_text(label, max_chars=20):
+            text = label.cget("text")
+            if len(text) > max_chars:
+                truncated_text = text[:max_chars] + "..."  # Ограничиваем текст до 20 символов
+                label.config(text=truncated_text)
+        #Окно с выбором файла
+        def open_file_dialog():
+            global button_flag, file_label, file_label_text
+            try:
+                if file_label:
+                    file_label.after(1, file_label.destroy())
+            except Exception as e:
+                print(0)
+
+            file_path = filedialog.askopenfilename(filetypes=[("Supported files", "*.csv;*.txt;*.docx")])
+            if file_path:
+                try:
+                    if file_path.endswith('.csv'):
+                        particle = 'csv'
+                    elif file_path.endswith('.docx'):
+                        particle = 'docx'
+                    elif file_path.endswith('.txt'):
+                        particle = 'txt'
+                    else:
+                        print(0)
+                except Exception as e:
+                    print("Error in claiming particle in file_path")
+                # button_flag = 1
+                # print("Выбранный файл:", file_path)
+                max_chars = 40
+                name = os.path.basename(file_path)
+                if len(name) > max_chars:
+                    name = name[:max_chars]+"..."
+
+                file_label = tk.Label(root, text=f"Выбран файл {particle}: {name}", font=("Arial", 14))
+                file_label.config(bg="yellow", fg="blue")
+                file_label.pack(padx=150, pady=10, side=tk.TOP, after=description_label)
+                read_file_contents(file_path)
+
         def error_window(): # Ошибка при пустом вводе
             global graph_window
             try:
@@ -91,7 +120,6 @@ class Text_analysis:
                 graph_window.destroy()
             except Exception as e:
                 pass
-
             er_window = tk.Toplevel(root)
             er_window.grab_set()
             er_window.title('Error')
@@ -109,31 +137,30 @@ class Text_analysis:
         def opening_the_text():
             global result_window, button_flag, docx_flag, csv_flag, txt_flag
             try:
-                if button_flag == 0:
-                    entered_text = entry.get("1.0",tk.END)
+                #Флаг и загрузка текста из окна текста entry
+                # if button_flag == 0:
+                #     entered_text = entry.get("1.0",tk.END)
+                #     val_words = word_tokenize(entered_text)
+                #     if entered_text and len(val_words) > 3:
+                #         text = entered_text.lower()
+                #     else:
+                #         error_window()
+                # else:
+                if csv_flag == 1:
+                    entered_text = text_from_csv
                     val_words = word_tokenize(entered_text)
                     if entered_text and len(val_words) > 3:
                         text = entered_text.lower()
-                    else:
-                        error_window()
-                else:
-                    if csv_flag == 1:
-                        entered_text = text_from_csv
-                        val_words = word_tokenize(entered_text)
-                        if entered_text and len(val_words) > 3:
-                            text = entered_text.lower()
-                    if docx_flag == 1:
-                        entered_text = text_from_docx
-                        val_words = word_tokenize(entered_text)
-                        if entered_text and len(val_words) > 3:
-                            text = entered_text.lower()
-                    if txt_flag == 1:
-                        entered_text = text_from_txt
-                        val_words = word_tokenize(entered_text)
-                        if entered_text and len(val_words) > 3:
-                            text = entered_text.lower()
-                    else:
-                        error_window()
+                if docx_flag == 1:
+                    entered_text = text_from_docx
+                    val_words = word_tokenize(entered_text)
+                    if entered_text and len(val_words) > 3:
+                        text = entered_text.lower()
+                if txt_flag == 1:
+                    entered_text = text_from_txt
+                    val_words = word_tokenize(entered_text)
+                    if entered_text and len(val_words) > 3:
+                        text = entered_text.lower()
             except ValueError as v:
                 error_window()
 
@@ -148,7 +175,10 @@ class Text_analysis:
                 except Exception as e:
                     print(f"Error: {e}")
                     return "Language detection for stopwords failed"
-            words = re.findall(r'\w+', text)
+            try:
+                words = re.findall(r'\w+', text)
+            except Exception as error:
+                error_window()
             try:
                 stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
             except Exception as e:
@@ -307,9 +337,7 @@ class Text_analysis:
                     fog_index = 0.4 * ((word_count / sentence_count) + 100 * (complex_word_count / word_count))
                     print('Gunning fog index', fog_index)
                     return fog_index
-
                 gunning = gunning_fog_index()
-
                 def SMOG_index():
                     sentence_count = len(sentences)
                     syllables_list = [dic_en.inserted(word).split('-') for word in words]
@@ -481,7 +509,6 @@ class Text_analysis:
                     plt.tight_layout(pad=0)
                     plt.show()
 
-
                 label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n")
                 label_2 = tk.Label(result_window, text=f"2) Gunning fog index: {round(gunning, 3)}\n")
                 label_3 = tk.Label(result_window, text=f"3) SMOG index: {round(smog, 3)}\n")
@@ -505,10 +532,9 @@ class Text_analysis:
                 generate_wordcloud()
             text_analysis()
             return
+
+        er_window = None
         def exit_program():
-            cap = None
-            if cap is not None:
-                print('0')
             try:
                 root.destroy()
             except Exception as e:
@@ -534,7 +560,7 @@ class Text_analysis:
             except Exception as e:
                 print(f"Failed to close graph_window")
                 pass
-        # Окно для текста Пока решил убрать, мешает
+        # Окно для текста
         # entry = tk.Text(root, width=70, height=15)
         # entry.pack(pady=10)
         select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, )
@@ -546,4 +572,5 @@ class Text_analysis:
         exit_button.pack(padx=20, pady=10)
         root.mainloop()
 
-    GUI_start()
+obj_text_an = Text_analysis()
+obj_text_an.GUI_start()
