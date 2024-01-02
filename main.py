@@ -81,7 +81,7 @@ class Text_analysis:
             except Exception as e:
                 print(0)
 
-            file_path = filedialog.askopenfilename(filetypes=[("Supported files", "*.csv;*.txt;*.docx")])
+            file_path = filedialog.askopenfilename(filetypes=[("Supported files", "*.csv;*.txt;*.docx"),("csv", "*.csv"),("txt", "*.txt"),("docx", "*.docx")])
             if file_path:
                 try:
                     if file_path.endswith('.csv'):
@@ -167,6 +167,9 @@ class Text_analysis:
             def detect_lang_for_stopwords_1(text):
                 try:
                     language = detect(text)
+                    #Добавить функцию которая бы определяла несколько языков сразу (разбивка по блокам, чем больше слов,
+                    # тем на большее количество блоков разбивается текст, далее поблочный анализ)
+                    # print(f"lang is {language}")
                     lang = Language.get(language)
                     en_full_language_name = lang.display_name('en')
                     full_language_name = en_full_language_name.lower()
