@@ -18,23 +18,24 @@ from docx import Document #python-docx lib
 import csv
 
 #Скачивание модуля для фильтрации слов  (если запускаете в первый раз, необходимо его скачать
-
 nltk.download('stopwords')
 nltk.download('punkt')
-
 #Решение для обнаружения пакета линуксом
-
 stopwords_path = nltk.data.find('corpora/stopwords.zip')
-print(f"stopwords path is {stopwords_path}")
+# print(f"stopwords path is {stopwords_path}")
+#Флаг - не используется т.к нет окна для ввода
 button_flag = 0
+#Флаги для обозначения типа файла при загрузке, переменные для присвоения текста из файла
 text_from_csv = ""
 csv_flag = 0
 text_from_txt = ""
 txt_flag = 0
 text_from_docx = ""
 docx_flag = 0
+#Создается пустой лэйбл, для функции смены названия выбранным для обработки файлам
 file_label = None
 class Text_analysis:
+    #Функция запуска графического интерфейса
     def GUI_start(self):
         root = tk.Tk()
         root.title("Анализ текста")
@@ -42,7 +43,7 @@ class Text_analysis:
         intro_label.pack(padx=150, pady=10)
         description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
         description_label.pack(padx=150, pady=10)
-
+        #Функция определения формата входящего файла и считывания
         def read_file_contents(file_path):
             global text_from_txt, text_from_docx, text_from_csv, csv_flag, txt_flag, docx_flag
             if file_path.endswith('.csv'):
@@ -65,14 +66,13 @@ class Text_analysis:
                 print(f"ТЕКСТ ИЗ DOCX {text_from_docx}")
                 docx_flag = 1
                 print(f"docx_flag {docx_flag}")
-        file_label_text = None
-
+        #Функция ограничения текста в лэйбла выбранного файла
         def limit_text(label, max_chars=20):
             text = label.cget("text")
             if len(text) > max_chars:
                 truncated_text = text[:max_chars] + "..."  # Ограничиваем текст до 20 символов
                 label.config(text=truncated_text)
-        #Окно с выбором файла
+        #Функция открытия окна с выбором необходимого для обработки файла
         def open_file_dialog():
             global button_flag, file_label, file_label_text
             try:
@@ -80,8 +80,9 @@ class Text_analysis:
                     file_label.after(1, file_label.destroy())
             except Exception as e:
                 print(0)
-
+            #На линукс не работает формат supported files, поэтому добавил каждый тип по отдельности
             file_path = filedialog.askopenfilename(filetypes=[("Supported files", "*.csv;*.txt;*.docx"),("csv", "*.csv"),("txt", "*.txt"),("docx", "*.docx")])
+            #Добавляем название формата в общее наименеование в лэйбле, который отражает выбранный файл
             if file_path:
                 try:
                     if file_path.endswith('.csv'):
@@ -105,8 +106,8 @@ class Text_analysis:
                 file_label.config(bg="yellow", fg="blue")
                 file_label.pack(padx=150, pady=10, side=tk.TOP, after=description_label)
                 read_file_contents(file_path)
-
-        def error_window(): # Ошибка при пустом вводе
+        #Функция открытия окна ошибки при пустом вводе
+        def error_window():
             global graph_window
             try:
                 result_window.destroy()
@@ -120,7 +121,7 @@ class Text_analysis:
                 graph_window.destroy()
             except Exception as e:
                 pass
-            er_window = tk.Toplevel(root)
+            er_window = tk.Toplevel(root) #Помещает ошибку поверх главного окна, что делает невозможным работу до тех пор пока ошибка не будет закрыта
             er_window.grab_set()
             er_window.title('Error')
             er_window.geometry("400x200")
@@ -128,12 +129,10 @@ class Text_analysis:
                                  font=("Arial", 14))
             err_label_1 = tk.Label(er_window, text=" Слишком мало текста или его нет,\n пожалуйста, повторите попытку",
                                  font=("Arial", 12))
-
             err_label.pack(padx=70, pady=10)
             err_label_1.pack(padx=70, pady=40)
 
-        # Новое окно, которое открывается после нажатия на кнопку
-
+        # Функция открытия окна результата
         def opening_the_text():
             global result_window, button_flag, docx_flag, csv_flag, txt_flag
             try:
@@ -163,7 +162,7 @@ class Text_analysis:
                         text = entered_text.lower()
             except ValueError as v:
                 error_window()
-
+            #Функция определения языка для последующей фильтрации слабозначимых слов
             def detect_lang_for_stopwords_1(text):
                 try:
                     language = detect(text)
@@ -199,10 +198,9 @@ class Text_analysis:
             intro_label.pack(padx=150, pady=10)
             word_combobox = tk.Listbox(result_window, selectmode=tk.EXTENDED, width=60, height=10)
             word_combobox.pack(pady=1)
-
+            #Функция для получения частоты слов
             def get_word_frequency():
                 global text_parts, word_freq, word_list
-
                 # Разбиение текста на 10 частей
                 words = word_tokenize(text)
                 text_parts = []
@@ -210,7 +208,6 @@ class Text_analysis:
                 remainder = len(words) % 10 #Остаток
                 try:
                     for i in range(0, len(words) - remainder, part_size):
-                        # if words[i].isdigit():
                         if re.search("\d",words[i]):
                             pass
                         else:
@@ -228,8 +225,8 @@ class Text_analysis:
                 except ValueError as v:
                     error_window()
                     print("Value Error in get_word_frequency function")
-
             get_word_frequency()
+            #Функция графика относительных частот
             def plot_word_usage():
                 global graph_window
                 selected_items = word_combobox.curselection()
@@ -249,7 +246,6 @@ class Text_analysis:
                             label=f'{selected_item}')
                     for i, freq in enumerate(word_part_freq, start=1):
                         ax.text(i, freq, f'{freq:.4f}', ha='center', va='bottom', fontsize=8)
-
                 ax.set_xlabel('Части текста')
                 ax.set_ylabel('Относительная частота слова')
                 ax.set_title(f'Относительная частота слов в частях текста')
@@ -261,13 +257,13 @@ class Text_analysis:
                 canvas = FigureCanvasTkAgg(fig, master=graph_window)
                 canvas.draw()
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-
             select_button_for_graph = tk.Button(result_window, text="Построить график", command=plot_word_usage, )
             select_button_for_graph.pack(padx=10, pady=10)
 
-            #Начало работы скрипта по анализу текста
+            #Начало работы функции по анализу текста
             def text_analysis():
                 global filtered_words
+                #Повторная функция определения языка и стопслов (необходимо убрать\совместить с предыдущей функцией определения языка)
                 def detect_language(text):
                     try:
                         language = detect(text)
@@ -281,6 +277,7 @@ class Text_analysis:
                     except Exception as e:
                         print(f"Error: {e}")
                         return "Language detection failed"
+                #По умолчанию пока что стоит английский для стопслов
                 def detect_lang_for_stopwords(text):
                     try:
                         language = detect(text)
@@ -292,7 +289,6 @@ class Text_analysis:
                     except Exception as e:
                         print(f"Error: {e}")
                         return "Language detection for stopwords failed"
-
                 words = re.findall(r'\w+', text)
                 # print(f"Все слова в тексте: {words}")
                 sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?|\!)\s', text)
@@ -317,7 +313,7 @@ class Text_analysis:
                 words_frequency = words_freq.most_common()
                 average_words_per_sentence = total_not_filtered_words / len(sentences)
 
-                # Тесты  на читаемость
+                # Индекс читаемости 1
                 def FKrt_index():
                     word_count = len(words)
                     sentence_count = len(sentences)
@@ -325,8 +321,9 @@ class Text_analysis:
                     index = 0.39 * (word_count / sentence_count) + 11.8 * (total_syllables / word_count) - 15.59
                     print('индекс FKRT',index)
                     return index
-
                 fkrt_index = FKrt_index()
+
+                # Индекс читаемости 2
                 def gunning_fog_index():
                     word_count = len(words)
                     sentence_count = len(sentences)
@@ -341,6 +338,8 @@ class Text_analysis:
                     print('Gunning fog index', fog_index)
                     return fog_index
                 gunning = gunning_fog_index()
+
+                # Индекс читаемости 3
                 def SMOG_index():
                     sentence_count = len(sentences)
                     syllables_list = [dic_en.inserted(word).split('-') for word in words]
@@ -353,6 +352,7 @@ class Text_analysis:
                     print('SMOG index',smog_ind)
                     return smog_ind
 
+                # Индекс читаемости 4
                 smog = SMOG_index()
                 def Coleman_Liau_index():
                     character_count = sum(len(word) for word in words)
@@ -367,6 +367,8 @@ class Text_analysis:
                     return collind
 
                 coleman = Coleman_Liau_index()
+
+                # Индекс читаемости 5
                 def ARI_index():
                     character_count = sum(len(word) for word in words)
                     sentences = text.split('. ')
@@ -382,6 +384,7 @@ class Text_analysis:
                     return ari_index
 
                 ariindex = ARI_index()
+
                 # Индекс лексической плотностии - считается как отношение количества уникальных слов к общему количеству слов
                 def lexical_density_index():  # Индекс лексической плотности
                     word_count = len(words)
@@ -397,7 +400,7 @@ class Text_analysis:
                 median_ind = (statistics.median([fkrt_index, gunning, smog, coleman, ariindex]))
                 print(f"Median_index: {median_ind}")
 
-                # Создание отчета
+                # Создание отчета в txt формате
                 def create_report():
                     curr_directory = os.getcwd()
                     DetectorFactory.seed = 0
@@ -501,6 +504,7 @@ class Text_analysis:
                 create_report()
 
                 #Нужно вставить wordcloud в окно tkinter
+                #Функция вордклауд
                 def generate_wordcloud():
                     word_freq = dict(Counter(filtered_words))
                     wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(
@@ -511,6 +515,8 @@ class Text_analysis:
                     plt.axis('off')
                     plt.tight_layout(pad=0)
                     plt.show()
+
+                #Лэйблы показателей обработки текста
 
                 label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n")
                 label_2 = tk.Label(result_window, text=f"2) Gunning fog index: {round(gunning, 3)}\n")
@@ -530,6 +536,7 @@ class Text_analysis:
                 label_7.pack(padx=10, pady=1)
                 label_8.pack(padx=10, pady=1)
                 label_9.pack(padx=10, pady=1)
+
                 #Вордклауд не компилируется, скорее всего из за того, что оно прикрепелно не к отдельному окну, а показано отдельно через PLT, хотя при компиляции как то
                 #затрагивается stopwords
                 generate_wordcloud()
@@ -537,6 +544,8 @@ class Text_analysis:
             return
 
         er_window = None
+
+        #Функция закрытия окон
         def exit_program():
             try:
                 root.destroy()
@@ -563,6 +572,7 @@ class Text_analysis:
             except Exception as e:
                 print(f"Failed to close graph_window")
                 pass
+
         # Окно для текста
         # entry = tk.Text(root, width=70, height=15)
         # entry.pack(pady=10)
