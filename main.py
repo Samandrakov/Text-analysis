@@ -10,6 +10,7 @@ from langcodes import Language #Нужно дополнительно устан
 from nltk.tokenize import word_tokenize
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import ttk
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -42,10 +43,12 @@ file_label = None
 wordcloud_label = None
 wordcloud_photo = None
 
+
 class Text_analysis:
     #Функция запуска графического интерфейса
 
     def GUI_start(self):
+
         root = tk.Tk()
 
         app_width = 500
@@ -90,13 +93,6 @@ class Text_analysis:
                 docx_flag = 1
                 print(f"docx_flag {docx_flag}")
 
-        #Функция ограничения текста в лэйбла выбранного файла
-        def limit_text(label, max_chars=20):
-            text = label.cget("text")
-            if len(text) > max_chars:
-                truncated_text = text[:max_chars] + "..."  # Ограничиваем текст до 20 символов
-                label.config(text=truncated_text)
-
         #Функция открытия окна с выбором необходимого для обработки файла
         def open_file_dialog():
             global button_flag, file_label, file_label_text
@@ -122,12 +118,14 @@ class Text_analysis:
                     print("Error in claiming particle in file_path")
                 # button_flag = 1
                 # print("Выбранный файл:", file_path)
-                max_chars = 20
+
+                # ограничение текста в лэйбла выбранного файла
+                max_chars = 50
                 name = os.path.basename(file_path)
                 if len(name) > max_chars:
                     name = name[:max_chars]+"..."
 
-                file_label = tk.Label(root, text=f"Выбран файл {particle}: {name}", font=("Calibri", 14), justify='left')
+                file_label = tk.Label(root, text=f"Выбран файл {particle}:\n{name}", font=("Calibri", 12), justify='center')
                 file_label.config(bg="yellow", fg="blue")
                 file_label.pack(padx=20, pady=10, after=description_label)
                 read_file_contents(file_path)
