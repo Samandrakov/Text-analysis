@@ -308,7 +308,7 @@ class Text_analysis:
                 # click_count += 1
                 # if click_count == 5:
                 #     print('Исчерпан лимит')
-                    return
+                #     return
                 global graph_window
                 selected_items = word_combobox.curselection()
                 fig, ax = plt.subplots(figsize=(8, 5))
