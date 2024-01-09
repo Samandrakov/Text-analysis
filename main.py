@@ -1,6 +1,8 @@
 import re
 import os
 import statistics
+import tkinter
+
 import nltk
 from langcodes import Language #Нужно дополнительно устанавливать пакет language_data
 from nltk.tokenize import word_tokenize
@@ -38,11 +40,25 @@ class Text_analysis:
     #Функция запуска графического интерфейса
     def GUI_start(self):
         root = tk.Tk()
+
+        app_width = 500
+        app_height = 480
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+
+        x = (screen_width / 2) - (app_width / 2)
+        y = (screen_height / 2) - (app_height / 2)
+
+        root.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+
+        root.resizable(width=False, height=False)
         root.title("Анализ текста")
-        intro_label = tk.Label(root, text="Анализ текста", font=("Arial", 20))
-        intro_label.pack(padx=150, pady=10)
-        description_label = tk.Label(root, text="Введите свой текст или загрузите документ в формате word, csv, txt", font=("Arial", 12))
-        description_label.pack(padx=150, pady=10)
+
+        intro_label = tk.Label(root, text="Анализ текста", font=("Calibri", 20))
+        intro_label.pack(padx=10, pady=10)
+        description_label = tk.Label(root, text="Для обработки загрузите файл\n(word, csv, txt)", font=("Calibri", 16))
+        description_label.pack(padx=10, pady=10)
+
         #Функция определения формата входящего файла и считывания
         def read_file_contents(file_path):
             global text_from_txt, text_from_docx, text_from_csv, csv_flag, txt_flag, docx_flag
@@ -97,14 +113,14 @@ class Text_analysis:
                     print("Error in claiming particle in file_path")
                 # button_flag = 1
                 # print("Выбранный файл:", file_path)
-                max_chars = 40
+                max_chars = 20
                 name = os.path.basename(file_path)
                 if len(name) > max_chars:
                     name = name[:max_chars]+"..."
 
-                file_label = tk.Label(root, text=f"Выбран файл {particle}: {name}", font=("Arial", 14))
+                file_label = tk.Label(root, text=f"Выбран файл {particle}: {name}", font=("Calibri", 14), justify='left')
                 file_label.config(bg="yellow", fg="blue")
-                file_label.pack(padx=150, pady=10, side=tk.TOP, after=description_label)
+                file_label.pack(padx=20, pady=10, after=description_label)
                 read_file_contents(file_path)
         #Функция открытия окна ошибки при пустом вводе
         def error_window():
@@ -122,19 +138,45 @@ class Text_analysis:
             except Exception as e:
                 pass
             er_window = tk.Toplevel(root) #Помещает ошибку поверх главного окна, что делает невозможным работу до тех пор пока ошибка не будет закрыта
+            app_width = 400
+            app_height = 200
+            screen_width = er_window.winfo_screenwidth()
+            screen_height = er_window.winfo_screenheight()
+
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+
+            er_window.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
             er_window.grab_set()
             er_window.title('Error')
-            er_window.geometry("400x200")
+            # er_window.geometry("400x200")
             err_label = tk.Label(er_window, text="ОШИБКА",
-                                 font=("Arial", 14))
-            err_label_1 = tk.Label(er_window, text=" Слишком мало текста или его нет,\n пожалуйста, повторите попытку",
-                                 font=("Arial", 12))
-            err_label.pack(padx=70, pady=10)
-            err_label_1.pack(padx=70, pady=40)
+                                 font=("Calibri", 14))
+            err_label_1 = tk.Label(er_window, text=" Слишком мало текста или его нет\n Пожалуйста, повторите попытку",
+                                 font=("Calibri", 12))
+            err_label.pack(padx=10, pady=10)
+            err_label_1.pack(padx=10, pady=10)
 
         # Функция открытия окна результата
         def opening_the_text():
             global result_window, button_flag, docx_flag, csv_flag, txt_flag
+            #Закрытие окон если они были ранее открыты
+            try:
+                result_window.destroy()
+            except Exception as e:
+                print(f"Failed to close result_window")
+                pass
+            try:
+                plt.close()
+            except Exception as e:
+                print(f"Failed to close graph")
+                pass
+            try:
+                graph_window.destroy()
+            except Exception as e:
+                print(f"Failed to close graph_window")
+                pass
+            #Предобработка текста
             try:
                 #Флаг и загрузка текста из окна текста entry
                 # if button_flag == 0:
@@ -192,10 +234,25 @@ class Text_analysis:
             pattern = re.compile(r'\d')
             filtered_words = [word for word in filtered_words if not pattern.search(word)]
             print(f"new filtered words list {filtered_words}")
+
+            #Создаем окно с результатами
             result_window = tk.Tk()
             result_window.title("Результат")
-            intro_label = tk.Label(result_window, text="Результат", font=("Arial", 20))
-            intro_label.pack(padx=150, pady=10)
+
+            app_width = 500
+            app_height = 550
+            screen_width = result_window.winfo_screenwidth()
+            screen_height = result_window.winfo_screenheight()
+
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+
+            result_window.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+
+            intro_label = tk.Label(result_window, text="Результат", font=("Calibri", 20))
+            intro_label.pack(padx=10, pady=10)
+            word_box_descript = tk.Label(result_window, text="Обработанный список слов и количество повторений в файле")
+            word_box_descript.pack(pady=1)
             word_combobox = tk.Listbox(result_window, selectmode=tk.EXTENDED, width=60, height=10)
             word_combobox.pack(pady=1)
             #Функция для получения частоты слов
@@ -220,8 +277,10 @@ class Text_analysis:
                     sorted_word_freq = dict(sorted(word_freq.items(), key=lambda item: item[1], reverse=True))
                     word_list = list(sorted_word_freq.keys())
                     word_combobox.delete(0, tk.END)
+                    i = 0
                     for word in word_list:
-                        word_combobox.insert(tk.END, f"{word} ({word_freq[word]})")
+                        i += 1
+                        word_combobox.insert(tk.END, f"{i}) {word} ({word_freq[word]})")
                 except ValueError as v:
                     error_window()
                     print("Value Error in get_word_frequency function")
@@ -517,36 +576,90 @@ class Text_analysis:
                     plt.show()
 
                 #Лэйблы показателей обработки текста
+                name_label = tk.Label(result_window, text="Индексы читаемости:")
+                label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n "
+                                                       f"2) Gunning fog index: {round(gunning, 3)}\n "
+                                                       f"3) SMOG index: {round(smog, 3)}\n "
+                                                       f"4) Coleman_Liau_index: {round(coleman, 3)}\n "
+                                                       f"5) ARI_index: {round(ariindex, 3)}\n ", justify='left')
 
-                label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n")
-                label_2 = tk.Label(result_window, text=f"2) Gunning fog index: {round(gunning, 3)}\n")
-                label_3 = tk.Label(result_window, text=f"3) SMOG index: {round(smog, 3)}\n")
-                label_4 = tk.Label(result_window, text=f"4) Coleman_Liau_index: {round(coleman, 3)}\n")
-                label_5 = tk.Label(result_window, text=f"5) ARI_index: {round(ariindex, 3)}\n")
-                label_6 = tk.Label(result_window, text=f"Среднее значение по всем индексам: {round(avg_index, 3)}\n")
-                label_7 = tk.Label(result_window, text=f"Медианное значение по всем индексам: {round(median_ind, 3)}\n")
-                label_8 = tk.Label(result_window, text=f"Лексическая плотность: {round(lexical_density_index(), 3)}\n")
-                label_9 = tk.Label(result_window, text=f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n")
+                label_2 = tk.Label(result_window, text=f"Среднее значение по всем индексам: {round(avg_index, 3)}\n "
+                                                       f"Медианное значение по всем индексам: {round(median_ind, 3)}\n "
+                                                       f"Лексическая плотность: {round(lexical_density_index(), 3)}\n "
+                                                       f"Среднее количество слов за предложение: {round(average_words_per_sentence, 3)}\n", justify='left')
+                name_label.pack(padx=10,pady=1)
                 label_1.pack(padx=10, pady=1)
                 label_2.pack(padx=10, pady=1)
-                label_3.pack(padx=10, pady=1)
-                label_4.pack(padx=10, pady=1)
-                label_5.pack(padx=10, pady=1)
-                label_6.pack(padx=10, pady=1)
-                label_7.pack(padx=10, pady=1)
-                label_8.pack(padx=10, pady=1)
-                label_9.pack(padx=10, pady=1)
 
-                #Вордклауд не компилируется, скорее всего из за того, что оно прикрепелно не к отдельному окну, а показано отдельно через PLT, хотя при компиляции как то
-                #затрагивается stopwords
+                exit_button_rw = tk.Button(result_window, text="Завершение работы", command=exit_program_rw, width=30, background='#C42B1C', fg='white')
+                exit_button_rw.pack(padx=20, pady=10)
+
                 generate_wordcloud()
             text_analysis()
             return
 
         er_window = None
 
-        #Функция закрытия окон
-        def exit_program():
+        #Окно с подтверждением выхода
+        def exit_program_rw():
+            global result_window
+
+            exit_confirm_window = tk.Toplevel(result_window)
+            frame1 = tk.Frame(exit_confirm_window)
+
+            app_width = 480
+            app_height = 240
+            screen_width = exit_confirm_window.winfo_screenwidth()
+            screen_height = exit_confirm_window.winfo_screenheight()
+
+            x = (screen_width / 2) - (app_width / 2)
+            y = (screen_height / 2) - (app_height / 2)
+
+            exit_confirm_window.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
+
+            exit_confirm_window.title('Выход')
+
+            inf_l = tk.Label(frame1, text="Подтверждение", font=("Calibri", 14))
+            sure_to_cls = tk.Label(exit_confirm_window, text=" Вы уверены, что хотите завершить программу ?",
+                                 font=("Calibri", 16))
+            inf_l.pack(padx=10, pady=10)
+            sure_to_cls.pack(padx=10, pady=10)
+            frame1.pack(padx=10, pady=10)
+            def destroy():
+                try:
+                    root.destroy()
+                except Exception as e:
+                    print(f"Failed to close root (exit_confirm)")
+                    pass
+                try:
+                    result_window.destroy()
+                except Exception as e:
+                    print(f"Failed to close result_window (exit_confirm)")
+                    pass
+                try:
+                    plt.close()
+                except Exception as e:
+                    print(f"Failed to close graph (exit_confirm)")
+                    pass
+                try:
+                    graph_window.destroy()
+                except Exception as e:
+                    print(f"Failed to close graph_window (exit_confirm)")
+                    pass
+                try:
+                    exit_confirm_window.destroy()
+                except Exception as e:
+                    print(f"Failed to close exit_confirm window")
+            def win_destroy():
+                close_exit_window = exit_confirm_window.destroy()
+            y_button = tk.Button(exit_confirm_window, text='Да', command=destroy, width=20)
+            y_button.pack(padx=20, pady=10)
+            n_button = tk.Button(exit_confirm_window, text='Нет', command=win_destroy, width=20)
+            n_button.pack(padx=20, pady=10)
+
+        #Функция закрытия окон для главного окна
+        def exit_program_root():
+
             try:
                 root.destroy()
             except Exception as e:
@@ -576,13 +689,13 @@ class Text_analysis:
         # Окно для текста
         # entry = tk.Text(root, width=70, height=15)
         # entry.pack(pady=10)
-        select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, )
+        select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, width= 25, font=("Calibri", 14))
         select_button.pack(padx=10, pady=10)
-        upload_button = tk.Button(root, text="Выбрать файл", command=open_file_dialog)
+        upload_button = tk.Button(root, text="Выбрать файл", command=open_file_dialog, width= 25, font=("Calibri", 14))
         upload_button.pack(padx=10, pady=10)
         # Показываем кнопку "завершение работы"
-        exit_button = tk.Button(root, text="Завершение работы", command=exit_program)
-        exit_button.pack(padx=20, pady=10)
+        exit_button = tk.Button(root, text="Завершение работы", command=exit_program_root, width= 25, background='#C42B1C', font=("Calibri", 14), fg='white')
+        exit_button.pack(padx=20, pady=40)
         root.mainloop()
 
 obj_text_an = Text_analysis()
