@@ -1,14 +1,17 @@
 import re
 import os
 import statistics
+import time
 import tkinter
-
+from PIL import ImageTk, Image
+import io
 import nltk
 from langcodes import Language #Нужно дополнительно устанавливать пакет language_data
 from nltk.tokenize import word_tokenize
 import tkinter as tk
 from tkinter import filedialog
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from wordcloud import WordCloud
 from langdetect import detect
@@ -36,6 +39,8 @@ text_from_docx = ""
 docx_flag = 0
 #Создается пустой лэйбл, для функции смены названия выбранным для обработки файлам
 file_label = None
+wordcloud_label = None
+wordcloud_photo = None
 class Text_analysis:
     #Функция запуска графического интерфейса
     def GUI_start(self):
@@ -249,7 +254,7 @@ class Text_analysis:
             screen_width = result_window.winfo_screenwidth()
             screen_height = result_window.winfo_screenheight()
 
-            x = (screen_width / 2) - (app_width / 2)
+            x = (screen_width / 2) - (app_width / 2) + 400
             y = (screen_height / 2) - (app_height / 2)
 
             result_window.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
@@ -570,15 +575,48 @@ class Text_analysis:
                 #Нужно вставить wordcloud в окно tkinter
                 #Функция вордклауд
                 def generate_wordcloud():
+                    global result_window, wordcloud_label
                     word_freq = dict(Counter(filtered_words))
-                    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(
+
+                    wordcloud = WordCloud(width=1200, height=600, background_color='white',
+                                          include_numbers=True, prefer_horizontal=True, min_font_size=8,
+                                          font_step=2).generate_from_frequencies(
                         word_freq)
 
-                    plt.figure(figsize=(8, 4))
+                    plt.figure(figsize=(10, 5))
+                    # plt.imshow(wordcloud, interpolation='bilinear')
                     plt.imshow(wordcloud, interpolation='bilinear')
                     plt.axis('off')
                     plt.tight_layout(pad=0)
                     plt.show()
+
+                wordcloud_photo = 0
+                #Попытка вставить водклауд в окно (почему то стирает значение image,
+                # хотя в общем метод рабочий)
+                def generate_wordcloud_tk():
+                    global result_window, wordcloud_label, wordcloud_photo
+                    word_freq = dict(Counter(filtered_words))
+
+                    wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(word_freq)
+
+                    # Сохранение изображения облака слов в память
+                    image_stream = io.BytesIO()
+                    wordcloud.to_image().save(image_stream, format='PNG')
+                    image_stream.seek(0)
+
+                    root1 = tk.Tk()
+                    root1.title('1')
+
+                    # Преобразование изображения в формат, подходящий для Tkinter
+                    image = Image.open(image_stream)
+                    wordcloud_photo = ImageTk.PhotoImage(image)
+
+                    # time.sleep(1)
+                    # Отображение изображения в окне Tkinter
+                    label_wc = tk.Label(root1, image=wordcloud_photo)
+                    label_wc.pack()
+
+                    return wordcloud_photo
 
                 #Лэйблы показателей обработки текста
                 name_label = tk.Label(result_window, text="Индексы читаемости:")
@@ -599,7 +637,9 @@ class Text_analysis:
                 exit_button_rw = tk.Button(result_window, text="Завершение работы", command=exit_program_rw, width=30, background='#C42B1C', fg='white')
                 exit_button_rw.pack(padx=20, pady=10)
 
+                # generate_wordcloud_tk()
                 generate_wordcloud()
+
             text_analysis()
             return
 
