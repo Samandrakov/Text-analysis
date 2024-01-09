@@ -156,6 +156,11 @@ class Text_analysis:
                                  font=("Calibri", 12))
             err_label.pack(padx=10, pady=10)
             err_label_1.pack(padx=10, pady=10)
+            def shutdown():
+                er_window.destroy()
+            ok_button = tk.Button(er_window, text='Ок', command=shutdown, width=20, font='Calibri, 14')
+            ok_button.pack(padx=10,pady=10)
+
 
         # Функция открытия окна результата
         def opening_the_text():
