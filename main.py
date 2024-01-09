@@ -42,7 +42,7 @@ docx_flag = 0
 file_label = None
 wordcloud_label = None
 wordcloud_photo = None
-
+click_count = 0
 
 class Text_analysis:
     #Функция запуска графического интерфейса
@@ -174,14 +174,14 @@ class Text_analysis:
             global result_window, button_flag, docx_flag, csv_flag, txt_flag
             #Закрытие окон если они были ранее открыты
             try:
+                plt.close('all')
+            except Exception as e:
+                print(f"Failed to close wordcloud")
+                pass
+            try:
                 result_window.destroy()
             except Exception as e:
                 print(f"Failed to close result_window")
-                pass
-            try:
-                plt.close()
-            except Exception as e:
-                print(f"Failed to close graph")
                 pass
             try:
                 graph_window.destroy()
@@ -301,7 +301,14 @@ class Text_analysis:
             get_word_frequency()
 
             #Функция графика относительных частот
+
             def plot_word_usage():
+                global click_count
+                # Ограничения на открытие графиков, чтобы нельзя было ими спамить
+                # click_count += 1
+                # if click_count == 5:
+                #     print('Исчерпан лимит')
+                    return
                 global graph_window
                 selected_items = word_combobox.curselection()
                 fig, ax = plt.subplots(figsize=(8, 5))
@@ -688,7 +695,7 @@ class Text_analysis:
                     print(f"Failed to close result_window (exit_confirm)")
                     pass
                 try:
-                    plt.close()
+                    plt.close('all')
                 except Exception as e:
                     print(f"Failed to close graph (exit_confirm)")
                     pass
