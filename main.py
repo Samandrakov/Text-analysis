@@ -41,8 +41,10 @@ docx_flag = 0
 file_label = None
 wordcloud_label = None
 wordcloud_photo = None
+
 class Text_analysis:
     #Функция запуска графического интерфейса
+
     def GUI_start(self):
         root = tk.Tk()
 
@@ -87,12 +89,14 @@ class Text_analysis:
                 print(f"ТЕКСТ ИЗ DOCX {text_from_docx}")
                 docx_flag = 1
                 print(f"docx_flag {docx_flag}")
+
         #Функция ограничения текста в лэйбла выбранного файла
         def limit_text(label, max_chars=20):
             text = label.cget("text")
             if len(text) > max_chars:
                 truncated_text = text[:max_chars] + "..."  # Ограничиваем текст до 20 символов
                 label.config(text=truncated_text)
+
         #Функция открытия окна с выбором необходимого для обработки файла
         def open_file_dialog():
             global button_flag, file_label, file_label_text
@@ -127,6 +131,7 @@ class Text_analysis:
                 file_label.config(bg="yellow", fg="blue")
                 file_label.pack(padx=20, pady=10, after=description_label)
                 read_file_contents(file_path)
+
         #Функция открытия окна ошибки при пустом вводе
         def error_window():
             global graph_window
@@ -165,7 +170,6 @@ class Text_analysis:
                 er_window.destroy()
             ok_button = tk.Button(er_window, text='Ок', command=shutdown, width=20, font='Calibri, 14')
             ok_button.pack(padx=10,pady=10)
-
 
         # Функция открытия окна результата
         def opening_the_text():
@@ -214,6 +218,7 @@ class Text_analysis:
                         text = entered_text.lower()
             except ValueError as v:
                 error_window()
+
             #Функция определения языка для последующей фильтрации слабозначимых слов
             def detect_lang_for_stopwords_1(text):
                 try:
@@ -265,6 +270,7 @@ class Text_analysis:
             word_box_descript.pack(pady=1)
             word_combobox = tk.Listbox(result_window, selectmode=tk.EXTENDED, width=60, height=10)
             word_combobox.pack(pady=1)
+
             #Функция для получения частоты слов
             def get_word_frequency():
                 global text_parts, word_freq, word_list
@@ -295,6 +301,7 @@ class Text_analysis:
                     error_window()
                     print("Value Error in get_word_frequency function")
             get_word_frequency()
+
             #Функция графика относительных частот
             def plot_word_usage():
                 global graph_window
@@ -346,6 +353,7 @@ class Text_analysis:
                     except Exception as e:
                         print(f"Error: {e}")
                         return "Language detection failed"
+
                 #По умолчанию пока что стоит английский для стопслов
                 def detect_lang_for_stopwords(text):
                     try:
