@@ -43,6 +43,8 @@ file_label = None
 wordcloud_label = None
 wordcloud_photo = None
 click_count = 0
+#Флаг загруженного документа
+load_file_label_flag = 0
 
 class Text_analysis:
     #Функция запуска графического интерфейса
@@ -52,7 +54,7 @@ class Text_analysis:
         root = tk.Tk()
 
         app_width = 500
-        app_height = 480
+        app_height = 780
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
 
@@ -95,7 +97,7 @@ class Text_analysis:
 
         #Функция открытия окна с выбором необходимого для обработки файла
         def open_file_dialog():
-            global button_flag, file_label, file_label_text
+            global button_flag, file_label, file_label_text, load_file_label_flag
             try:
                 if file_label:
                     file_label.after(1, file_label.destroy())
@@ -129,6 +131,30 @@ class Text_analysis:
                 file_label.config(bg="yellow", fg="blue")
                 file_label.pack(padx=20, pady=10, after=description_label)
                 read_file_contents(file_path)
+                load_file_label_flag = 1
+                print(f"load_file_label_flag in loading def {load_file_label_flag}")
+                check_text()
+
+        def delete_file():
+            global load_file_label_flag
+            global csv_flag, txt_flag, docx_flag, load_file_label_flag
+            print(f"load_file_label_flag in delete file {load_file_label_flag}")
+            try:
+                file_label.destroy()
+                if not file_label.winfo_exists():
+                    print("not exists")
+                if file_label.winfo_exists():
+                    print('exists')
+
+            except Exception as e:
+                # print('01')
+                pass
+            #Очищаем метки, чтобы при обработке не было захвата текста из загрузок
+            csv_flag = 0
+            txt_flag = 0
+            docx_flag = 0
+            load_file_label_flag = 0
+            check_text()
 
         #Функция открытия окна ошибки при пустом вводе
         def error_window():
@@ -191,14 +217,12 @@ class Text_analysis:
             #Предобработка текста
             try:
                 #Флаг и загрузка текста из окна текста entry
-                # if button_flag == 0:
-                #     entered_text = entry.get("1.0",tk.END)
-                #     val_words = word_tokenize(entered_text)
-                #     if entered_text and len(val_words) > 3:
-                #         text = entered_text.lower()
-                #     else:
-                #         error_window()
-                # else:
+                if button_flag == 0:
+                    entered_text = entry.get("1.0",tk.END)
+                    val_words = word_tokenize(entered_text)
+                    if entered_text and len(val_words) > 3:
+                        text = entered_text.lower()
+
                 if csv_flag == 1:
                     entered_text = text_from_csv
                     val_words = word_tokenize(entered_text)
@@ -240,6 +264,7 @@ class Text_analysis:
                 stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
             except Exception as e:
                 print(f"no stopwords")
+                #lang
                 stop_words = set(stopwords.words("english"))
             # stop_words = set(stopwords.words(f"{detect_lang_for_stopwords_1(text)}"))  # Наименование пакетов может различаться (в линукс наименование пакетов идет с маленькой буквы)
             filtered_words = [word for word in words if word.lower() not in stop_words]
@@ -253,7 +278,7 @@ class Text_analysis:
             result_window.title("Результат")
 
             app_width = 500
-            app_height = 550
+            app_height = 600
             screen_width = result_window.winfo_screenwidth()
             screen_height = result_window.winfo_screenheight()
 
@@ -647,6 +672,8 @@ class Text_analysis:
                 label_1.pack(padx=10, pady=1)
                 label_2.pack(padx=10, pady=1)
 
+                exit_res_window = tk.Button(result_window, text="Закрыть окно результатов", command=exit_result, width=30, background='#C42B1C', fg='white')
+                exit_res_window.pack(padx=20, pady=10)
                 exit_button_rw = tk.Button(result_window, text="Завершение работы", command=exit_program_rw, width=30, background='#C42B1C', fg='white')
                 exit_button_rw.pack(padx=20, pady=10)
 
@@ -657,6 +684,76 @@ class Text_analysis:
             return
 
         er_window = None
+
+        def clear_text():
+            entry.delete("1.0", tk.END)
+            check_text()
+
+        def check_text():
+            global load_file_label_flag
+            text_content = entry.get('1.0', tk.END).strip()
+            label_content = entry.get("1.0", tk.END).strip()
+
+            print(label_content)
+            print(f"load_file_label_flag in check text {load_file_label_flag}")
+
+            if text_content:
+                print(f"is text content ")
+            if not text_content:
+                print( f" not text content")
+
+
+            try:
+                if text_content and load_file_label_flag == 1:
+                    select_button.config(state=tk.DISABLED)
+                print("01 check text")
+            except Exception as e:
+                print("01 check text err")
+                pass
+            try:
+                if not text_content and load_file_label_flag == 1:
+                    select_button.config(state=tk.NORMAL)
+                print("02 check text")
+                pass
+            except Exception as e:
+                print("02 check text err")
+            try:
+                if text_content and load_file_label_flag == 0:
+                    select_button.config(state=tk.NORMAL)
+                print("03 check text")
+                pass
+            except Exception as e:
+                print("03 check text err")
+            try:
+                if not text_content and load_file_label_flag == 0:
+                    select_button.config(state=tk.DISABLED)
+                print("04 check text")
+                pass
+            except Exception as e:
+                print("04 check text err")
+
+        def exit_result():
+            global result_window, exit_confirm_window
+
+            try:
+                result_window.destroy()
+            except Exception as e:
+                print(f"Failed to close result_window (exit_confirm)")
+                pass
+            try:
+                plt.close('all')
+            except Exception as e:
+                print(f"Failed to close graph (exit_confirm)")
+                pass
+            try:
+                graph_window.destroy()
+            except Exception as e:
+                print(f"Failed to close graph_window (exit_confirm)")
+                pass
+            try:
+                exit_confirm_window.destroy()
+            except Exception as e:
+                print(f"Failed to close exit_confirm window")
 
         #Окно с подтверждением выхода
         def exit_program_rw():
@@ -674,7 +771,6 @@ class Text_analysis:
             y = (screen_height / 2) - (app_height / 2)
 
             exit_confirm_window.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
-
             exit_confirm_window.title('Выход')
 
             inf_l = tk.Label(frame1, text="Подтверждение", font=("Calibri", 14))
@@ -745,11 +841,20 @@ class Text_analysis:
                 pass
 
         # Окно для текста
-        # entry = tk.Text(root, width=70, height=15)
-        # entry.pack(pady=10)
+
+        entry = tk.Text(root, width=50, height=10)
+        entry.pack(pady=10)
+        entry.bind("<KeyRelease>", lambda event: check_text())
+
+        text_delete_button = tk.Button(root, text='Удалить содержимое', command=clear_text, width= 25, font=("Calibri", 14))
+        text_delete_button.pack(padx=10, pady=10)
         select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, width= 25, font=("Calibri", 14))
+        # select_button.config(state=tk.DISABLED)
         select_button.pack(padx=10, pady=10)
         upload_button = tk.Button(root, text="Выбрать файл", command=open_file_dialog, width= 25, font=("Calibri", 14))
+        upload_button.pack(padx=10, pady=10)
+        delete_file_button = tk.Button(root, text="Удалить файл", command=delete_file, width = 25, font=("Calibri", 14))
+        delete_file_button.pack(padx=10, pady=10)
         upload_button.pack(padx=10, pady=10)
         # Показываем кнопку "завершение работы"
         exit_button = tk.Button(root, text="Завершение работы", command=exit_program_root, width= 25, background='#C42B1C', font=("Calibri", 14), fg='white')

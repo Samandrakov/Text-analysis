@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5071a2bd-3a25-4a99-9ac2-496d460ca452" name="Changes" comment="0.27 first attempt to fix spaming with graphs">
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/report_1.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2ZJTuyeQaYewpWgddfQ3h6FE5Oi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.1.executor&quot;: &quot;Run&quot;,
+    &quot;Python.2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.3.executor&quot;: &quot;Run&quot;,
+    &quot;Python.4.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Данила/Desktop/Homework/Program&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-67fca87a943a-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.11799.259" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5071a2bd-3a25-4a99-9ac2-496d460ca452" name="Changes" comment="" />
+      <created>1702139408350</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702139408350</updated>
+    </task>
+    <task id="LOCAL-00001" summary="0.18 num filtration gui changes">
+      <option name="closed" value="true" />
+      <created>1702204364565</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702204364565</updated>
+    </task>
+    <task id="LOCAL-00002" summary="0.19 ADDED text of chosen files">
+      <option name="closed" value="true" />
+      <created>1703249180747</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703249180747</updated>
+    </task>
+    <task id="LOCAL-00003" summary="0.20 Added separate supported files' names in filedialog">
+      <option name="closed" value="true" />
+      <created>1704194344121</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1704194344121</updated>
+    </task>
+    <task id="LOCAL-00004" summary="0.21 Added description in code">
+      <option name="closed" value="true" />
+      <created>1704383449362</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1704383449362</updated>
+    </task>
+    <task id="LOCAL-00005" summary="0.22 changed design added shutdown button to result window/ fixed multiple result window opening bug">
+      <option name="closed" value="true" />
+      <created>1704764131777</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1704764131777</updated>
+    </task>
+    <task id="LOCAL-00006" summary="0.23 added ok button to error window">
+      <option name="closed" value="true" />
+      <created>1704764356084</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704764356084</updated>
+    </task>
+    <task id="LOCAL-00007" summary="0.24 first try to insert wordcloud in tk window (loses image)">
+      <option name="closed" value="true" />
+      <created>1704808599249</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1704808599249</updated>
+    </task>
+    <task id="LOCAL-00008" summary="0.25 first try to insert wordcloud in tk window (loses image)">
+      <option name="closed" value="true" />
+      <created>1704808731746</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1704808731746</updated>
+    </task>
+    <task id="LOCAL-00009" summary="0.26 code fixes">
+      <option name="closed" value="true" />
+      <created>1704810223951</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1704810223951</updated>
+    </task>
+    <task id="LOCAL-00010" summary="0.27 first attempt to fix spaming with graphs">
+      <option name="closed" value="true" />
+      <created>1704811062472</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1704811062472</updated>
+    </task>
+    <task id="LOCAL-00011" summary="0.27 first attempt to fix spaming with graphs">
+      <option name="closed" value="true" />
+      <created>1704811179000</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1704811179000</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="0.18 num filtration gui changes" />
+    <MESSAGE value="0.19 ADDED text of chosen files" />
+    <MESSAGE value="0.20 Added separate supported files' names in filedialog" />
+    <MESSAGE value="0.21 Added description in code" />
+    <MESSAGE value="0.22 changed design added shutdown button to result window/ fixed multiple result window opening bug" />
+    <MESSAGE value="0.23 added ok button to error window" />
+    <MESSAGE value="0.24 first try to insert wordcloud in tk window (loses image)" />
+    <MESSAGE value="0.25 first try to insert wordcloud in tk window (loses image)" />
+    <MESSAGE value="0.26 code fixes" />
+    <MESSAGE value="0.27 first attempt to fix spaming with graphs" />
+    <option name="LAST_COMMIT_MESSAGE" value="0.27 first attempt to fix spaming with graphs" />
+  </component>
+</project>
