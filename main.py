@@ -22,6 +22,8 @@ from nltk.corpus import stopwords
 from collections import Counter
 from docx import Document #python-docx lib
 import csv
+#Необходим пакет pillow для обработки и отображения wordcloud в linux
+#pip install --upgrde pillow
 
 #Скачивание модуля для фильтрации слов  (если запускаете в первый раз, необходимо его скачать
 nltk.download('stopwords')
@@ -278,7 +280,7 @@ class Text_analysis:
             result_window.title("Результат")
 
             app_width = 500
-            app_height = 600
+            app_height = 700
             screen_width = result_window.winfo_screenwidth()
             screen_height = result_window.winfo_screenheight()
 
@@ -616,10 +618,12 @@ class Text_analysis:
                     global result_window, wordcloud_label
                     word_freq = dict(Counter(filtered_words))
 
-                    wordcloud = WordCloud(width=1200, height=600, background_color='white',
-                                          include_numbers=True, prefer_horizontal=True, min_font_size=8,
-                                          font_step=2).generate_from_frequencies(
-                        word_freq)
+                    #wordcloud = WordCloud(width=1200, height=600, background_color='white',
+                    #                      include_numbers=True, prefer_horizontal=True, min_font_size=8,
+                    #                     font_step=2).generate_from_frequencies(
+                    #    word_freq)
+
+                    wordcloud = WordCloud(width=1200, height=600).generate_from_frequencies(word_freq)
 
                     plt.figure(figsize=(10, 5))
                     # plt.imshow(wordcloud, interpolation='bilinear')
@@ -846,9 +850,9 @@ class Text_analysis:
         entry.pack(pady=10)
         entry.bind("<KeyRelease>", lambda event: check_text())
 
-        text_delete_button = tk.Button(root, text='Удалить содержимое', command=clear_text, width= 25, font=("Calibri", 14))
+        text_delete_button = tk.Button(root, text='Удалить содержимое', command=clear_text, width= 25, font=("Calibri",14))
         text_delete_button.pack(padx=10, pady=10)
-        select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, width= 25, font=("Calibri", 14))
+        select_button = tk.Button(root, text="Обработать текст", command=opening_the_text, width= 25, font=("Calibri", 14), state=tk.DISABLED)
         # select_button.config(state=tk.DISABLED)
         select_button.pack(padx=10, pady=10)
         upload_button = tk.Button(root, text="Выбрать файл", command=open_file_dialog, width= 25, font=("Calibri", 14))
