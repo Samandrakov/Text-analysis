@@ -365,7 +365,7 @@ class Text_analysis:
                 canvas = FigureCanvasTkAgg(fig, master=graph_window)
                 canvas.draw()
                 canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
-            select_button_for_graph = tk.Button(result_window, text="Построить график", command=plot_word_usage, )
+            select_button_for_graph = tk.Button(result_window, text="Построить график относительной частоты", command=plot_word_usage, )
             select_button_for_graph.pack(padx=10, pady=10)
 
             #Начало работы функции по анализу текста
@@ -665,8 +665,8 @@ class Text_analysis:
                 label_1 = tk.Label(result_window, text=f"1) Flesch–Kincaid index: {round(fkrt_index, 3)}\n "
                                                        f"2) Gunning fog index: {round(gunning, 3)}\n "
                                                        f"3) SMOG index: {round(smog, 3)}\n "
-                                                       f"4) Coleman_Liau_index: {round(coleman, 3)}\n "
-                                                       f"5) ARI_index: {round(ariindex, 3)}\n ", justify='left')
+                                                       f"4) Coleman Liau index: {round(coleman, 3)}\n "
+                                                       f"5) ARI index: {round(ariindex, 3)}\n ", justify='left')
 
                 label_2 = tk.Label(result_window, text=f"Среднее значение по всем индексам: {round(avg_index, 3)}\n "
                                                        f"Медианное значение по всем индексам: {round(median_ind, 3)}\n "
