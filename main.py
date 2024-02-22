@@ -6,7 +6,7 @@ import tkinter
 from PIL import ImageTk, Image
 import io
 import nltk
-from langcodes import Language #Нужно дополнительно устанавливать пакет language_data
+from langcodes import Language #Нужно дополнительно устанавливать пакет pip install language_data
 from nltk.tokenize import word_tokenize
 import tkinter as tk
 from tkinter import filedialog
